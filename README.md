@@ -44,7 +44,7 @@ Compile the contracts with `pnpm build`.
 
 Run tests with `pnpm test`.
 
-Run coverage report with `pnpm coverage`. View coverage report with `genhtml -o report --branch-coverage --ignore-errors category lcov.info && py -m http.server`. Viewing the report with this command requires Python to be installed.
+Run coverage report with `pnpm coverage`. View coverage report with `genhtml -o report --branch-coverage --ignore-errors category lcov.info && python3 -m http.server`. Viewing the report with this command requires Python to be installed.
 
 Compare gas usage with `pnpm snapshot:compare`. Note as some test use random values, the gas usage may vary slightly between runs.
 
