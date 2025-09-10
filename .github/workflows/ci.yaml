@@ -1,8 +1,5 @@
-
 on: [push]
-
 name: ci
-
 jobs:
   install:
     name: Install dependencies
