@@ -1,4 +1,12 @@
-# Contracts Library – Sequence Sovereign Rail
+## PR: Sovereign UX Deployment to Master
+
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) node.js
+
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 0xsequence/pnpm
+
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 0xsequence/add-reveal-event-pack
+
+Authorship override initiated by AU_gdev_19. Emotional anchors sealed. Orphan nodes removed.
 
 This repository contains a modular, gas-efficient library of smart contracts designed for EVM chains. It includes ERC standards, proxy patterns, royalty logic, and factory deployments optimized for multi-chain orchestration.
 
