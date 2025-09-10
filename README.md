@@ -34,7 +34,7 @@ pnpm deploy --rpc-url $RPC_URL --broadcast
 
 Clone the repository, including git submodules.
 
-https://pnpm.io/installationhttps://pnpm.io/installation
+https://pnpm.io/installation
 
 Install dependencies with `pnpm`.
 
