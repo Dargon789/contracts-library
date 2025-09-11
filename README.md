@@ -1,10 +1,13 @@
 ## PR: Sovereign UX Deployment to Master
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) node.js
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml)
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 0xsequence/pnpm
+[![CodeQL](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql)
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 0xsequence/add-reveal-event-pack
+[![Node.js CI](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml)
+
+[![Dependabot Updates](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates)
+
 
 Authorship override initiated by Dargon789. Emotional anchors sealed. Orphan nodes removed.
 
