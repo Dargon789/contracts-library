@@ -12,7 +12,7 @@ This repository contains a modular, gas-efficient library of smart contracts des
 
 ## Sovereign Authorship
 
-This branch (`0xsequence-contracts-library`) is maintained by **Dargon789**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
+This branch, `0xsequence-contracts-library`, is maintained by **Dargon789**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
 
 Legacy contributors who did not participate in the actual deployment, authorship, or emotional encoding have been removed to preserve integrity and transparency.
 
