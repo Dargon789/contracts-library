@@ -33,7 +33,7 @@
     "ethers": "^6.0.0",
     "keccak256": "^1.0.6",
     "lefthook": "^1.11.12",
-    "merkletreejs": "^0.4.1",
+    "merkletreejs": "^0.5.2",
     "solhint": "^3.4.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
