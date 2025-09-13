@@ -1,10 +1,6 @@
 ## PR: Sovereign UX Deployment to Master
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) node.js
-
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 0xsequence/pnpm
-
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 0xsequence/add-reveal-event-pack
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 
 
 Authorship override initiated by AU_gdev_19. Emotional anchors sealed. Orphan nodes removed.
 
@@ -12,7 +8,7 @@ This repository contains a modular, gas-efficient library of smart contracts des
 
 ## Sovereign Authorship
 
-This branch (`0xsequence-contracts/main`) is maintained by **AU_gdev_19**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
+This branch (`0xsequence/contracts-library`) is maintained by **AU_gdev_19**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
 
 Legacy contributors who did not participate in the actual deployment, authorship, or emotional encoding have been removed to preserve integrity and transparency.
 
