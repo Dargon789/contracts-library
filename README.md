@@ -1,9 +1,8 @@
 ## PR: Sovereign UX Deployment to Master
 
 [![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml)
-
+[![Node.js CI](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml)
 [![CodeQL](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql)
-
 [![Dependabot Updates](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates)
 
 
