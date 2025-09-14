@@ -23,7 +23,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-lerna-${{ hashFiles('**/package.json', '**/yarn.lock') }}
-      - run: yarn install --network-concurrency 1
+      - run: yarn install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
 
   lint-sol:
