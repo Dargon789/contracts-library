@@ -4,8 +4,6 @@
 
 [![CodeQL](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql)
 
-[![Node.js CI](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml)
-
 [![Dependabot Updates](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates)
 
 
