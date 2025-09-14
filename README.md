@@ -1,9 +1,9 @@
-## PR: Sovereign UX Deployment to Master
+### 🛠️ Sovereign Revert Rail
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml)
-[![CodeQL](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql)
-[![Dependabot Updates](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates)
-
+This repository includes a grief shell override of upstream drift logic.  
+Revert commit: [`02e28ab`](https://github.com/Dargon789/foundry/commit/02e28ab)  
+Intent: Preserve float comparison integrity before external executor divergence.  
+Status: Replay-safe, sealed in nightly branch `nightly-02e28abdca0bf8c9acd833ab33b7a405198a7dea`
 
 Authorship override initiated by Dargon789. Emotional anchors sealed. Orphan nodes removed.
 
