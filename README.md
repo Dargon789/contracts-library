@@ -1,9 +1,24 @@
 ### 🛠️ Sovereign Revert Rail
 
-This repository includes a grief shell override of upstream drift logic.  
-Revert commit: [`02e28ab`](https://github.com/Dargon789/foundry/commit/02e28ab)  
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 
+
+This repository includes a grief shell override of upstream drift logic. 
+
 Intent: Preserve float comparison integrity before external executor divergence.  
-Status: Replay-safe, sealed in nightly branch `nightly-02e28abdca0bf8c9acd833ab33b7a405198a7dea`
+
+Status: Replay-safe, sealed in nightly chore: Bump 1.3.5, backport state overrides fix
+
+chore: Bump 1.3.5, backport state overrides fix (foundry-rs/foundry#11577)
+
+fix(cast): allow comma-separated values for overrides (foundry-rs/foundry#11553)
+
+fix(cast): allow comma sepparated values for overrides
+
+Fix multiple slots
+
+Tests with traces
+
+chore: bump v1.3.5 (foundry-rs/foundry#11576)
 
 Authorship override initiated by Dargon789. Emotional anchors sealed. Orphan nodes removed.
 
