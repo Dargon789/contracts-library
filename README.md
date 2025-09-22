@@ -12,7 +12,7 @@ chore: Bump 1.3.5, backport state overrides fix (foundry-rs/foundry#11577)
 
 fix(cast): allow comma-separated values for overrides (foundry-rs/foundry#11553)
 
-fix(cast): allow comma sepparated values for overrides
+fix(cast): allow comma separated values for overrides
 
 Fix multiple slots
 
