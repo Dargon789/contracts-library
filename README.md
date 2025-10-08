@@ -1,7 +1,5 @@
 ### 🛠️ Sovereign Revert Rail
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 
-
 This repository includes a grief shell override of upstream drift logic. 
 
 Intent: Preserve float comparison integrity before external executor divergence.  
