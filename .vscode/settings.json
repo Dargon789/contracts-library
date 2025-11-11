@@ -4,6 +4,7 @@
     "editor.defaultFormatter": "JuanBlanco.solidity"
   },
   "solidity.formatter": "forge",
+<<<<<<< Updated upstream
   "solidity.compileUsingRemoteVersion": "v0.8.27",
   "solidity.remappings": [
     "erc2470-libs/=lib/erc2470-libs/",
@@ -14,4 +15,7 @@
     "solady/=lib/solady/src/",
     "signals-implicit-mode/=lib/signals-implicit-mode/"
   ]
+=======
+  "solidity.compileUsingRemoteVersion": "v0.8.19"
+>>>>>>> Stashed changes
 }
