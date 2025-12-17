@@ -4,9 +4,6 @@
 [submodule "lib/murky"]
 	path = lib/murky
 	url = https://github.com/dmfxyz/murky
-[submodule "lib/0xsequence/erc-1155"]
-	path = lib/0xsequence/erc-1155
-	url = https://github.com/0xsequence/erc-1155
 [submodule "lib/0xsequence/erc20-meta-token"]
 	path = lib/0xsequence/erc20-meta-token
 	url = https://github.com/0xsequence/erc20-meta-token
