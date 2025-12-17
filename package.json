@@ -13,13 +13,13 @@
   "author": "Horizon Blockchain Games",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "forge build --force",
-    "deploy": "forge script Deploy",
+    "build": "ts-node scripts/build.ts",
+    "deploy": "ts-node scripts/deploy.ts",
     "test": "forge test",
     "coverage": "forge coverage --report lcov",
     "snapshot:compare": "forge snapshot --diff .gas-snapshot",
     "snapshot:write": "forge snapshot",
-    "lint:init": "lefthook install",
+    "lint:init": "husky install",
     "lint:sol": "solhint \"./src/**/*.sol\" \"./tests/**/*.sol\"",
     "format:sol": "forge fmt"
   },
@@ -27,15 +27,25 @@
     "src",
     "dist"
   ],
+  "lint-staged": {
+    "**/*.sol": "yarn lint:sol && yarn format:sol"
+  },
   "devDependencies": {
-    "@types/node": "^24.3.0",
-    "dotenv": "^17.2.2",
-    "ethers": "^6.0.0",
+    "@types/node": "^20.1.0",
+    "dotenv": "^16.1.4",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.22.10",
+    "husky": "^8.0.3",
     "keccak256": "^1.0.6",
-    "lefthook": "^1.11.12",
-    "merkletreejs": "0.5.2",
+    "lint-staged": "^13.2.2",
+    "merkletreejs": "^0.2.32",
     "solhint": "^3.4.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "anvil": "^0.0.6",
+    "deploy": "^1.0.3",
+    "make": "^0.8.1"
   }
 }

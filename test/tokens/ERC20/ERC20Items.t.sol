@@ -1,21 +1,20 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { TestHelper } from "../../TestHelper.sol";
+import {TestHelper} from "../../TestHelper.sol";
 
-import { ERC20Items } from "src/tokens/ERC20/presets/items/ERC20Items.sol";
-import { ERC20ItemsFactory } from "src/tokens/ERC20/presets/items/ERC20ItemsFactory.sol";
-import { IERC20Items, IERC20ItemsFunctions, IERC20ItemsSignals } from "src/tokens/ERC20/presets/items/IERC20Items.sol";
+import {ERC20Items} from "src/tokens/ERC20/presets/items/ERC20Items.sol";
+import {IERC20Items, IERC20ItemsSignals, IERC20ItemsFunctions} from "src/tokens/ERC20/presets/items/IERC20Items.sol";
+import {ERC20ItemsFactory} from "src/tokens/ERC20/presets/items/ERC20ItemsFactory.sol";
 
-import { IERC20 } from "openzeppelin-contracts/contracts/interfaces/IERC20.sol";
-import { IERC20Metadata } from "openzeppelin-contracts/contracts/interfaces/IERC20Metadata.sol";
-import { Strings } from "openzeppelin-contracts/contracts/utils/Strings.sol";
-import { IERC165 } from "openzeppelin-contracts/contracts/utils/introspection/IERC165.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
-import { ISignalsImplicitMode } from "signals-implicit-mode/src/helper/SignalsImplicitMode.sol";
+// Interfaces
+import {IERC165} from "@0xsequence/erc-1155/contracts/interfaces/IERC165.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
-
     // Redeclare events
     event Transfer(address indexed from, address indexed to, uint256 value);
 
@@ -34,12 +33,12 @@ contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
         vm.deal(owner, 100 ether);
 
         ERC20ItemsFactory factory = new ERC20ItemsFactory(address(this));
-        token = ERC20Items(factory.deploy(proxyOwner, owner, "name", "symbol", DECIMALS, address(0), bytes32(0)));
+        token = ERC20Items(factory.deploy(proxyOwner, owner, "name", "symbol", DECIMALS));
     }
 
     function testReinitializeFails() public {
         vm.expectRevert(InvalidInitialization.selector);
-        token.initialize(owner, "name", "symbol", DECIMALS, address(0), bytes32(0));
+        token.initialize(owner, "name", "symbol", DECIMALS);
     }
 
     function testSupportsInterface() public view {
@@ -47,16 +46,14 @@ contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
         assertTrue(token.supportsInterface(type(IERC20).interfaceId));
         assertTrue(token.supportsInterface(type(IERC20Metadata).interfaceId));
         assertTrue(token.supportsInterface(type(IERC20ItemsFunctions).interfaceId));
-        assertTrue(token.supportsInterface(type(ISignalsImplicitMode).interfaceId));
     }
 
     /**
      * Test all public selectors for collisions against the proxy admin functions.
-     * @dev pnpm ts-node scripts/outputSelectors.ts
+     * @dev yarn ts-node scripts/outputSelectors.ts
      */
     function testSelectorCollision() public pure {
         checkSelectorCollision(0xa217fddf); // DEFAULT_ADMIN_ROLE()
-        checkSelectorCollision(0x9d043a66); // acceptImplicitRequest(address,(address,bytes4,bytes32,bytes32,bytes,(string,uint64)),(address,uint256,bytes,uint256,bool,bool,uint256))
         checkSelectorCollision(0xdd62ed3e); // allowance(address,address)
         checkSelectorCollision(0x095ea7b3); // approve(address,uint256)
         checkSelectorCollision(0x70a08231); // balanceOf(address)
@@ -69,13 +66,11 @@ contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
         checkSelectorCollision(0x2f2ff15d); // grantRole(bytes32,address)
         checkSelectorCollision(0x91d14854); // hasRole(bytes32,address)
         checkSelectorCollision(0x39509351); // increaseAllowance(address,uint256)
-        checkSelectorCollision(0x9c14f298); // initialize(address,string,string,uint8,address,bytes32)
+        checkSelectorCollision(0xf6d2ee86); // initialize(address,string,string,uint8)
         checkSelectorCollision(0x40c10f19); // mint(address,uint256)
         checkSelectorCollision(0x06fdde03); // name()
         checkSelectorCollision(0x36568abe); // renounceRole(bytes32,address)
         checkSelectorCollision(0xd547741f); // revokeRole(bytes32,address)
-        checkSelectorCollision(0xed4c2ac7); // setImplicitModeProjectId(bytes32)
-        checkSelectorCollision(0x0bb310de); // setImplicitModeValidator(address)
         checkSelectorCollision(0x5a446215); // setNameAndSymbol(string,string)
         checkSelectorCollision(0x01ffc9a7); // supportsInterface(bytes4)
         checkSelectorCollision(0x95d89b41); // symbol()
@@ -87,7 +82,6 @@ contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
     function testOwnerHasRoles() public view {
         assertTrue(token.hasRole(token.DEFAULT_ADMIN_ROLE(), owner));
         assertTrue(token.hasRole(keccak256("MINTER_ROLE"), owner));
-        assertTrue(token.hasRole(keccak256("IMPLICIT_MODE_ADMIN_ROLE"), owner));
     }
 
     function testInitValues() public view {
@@ -101,19 +95,13 @@ contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
         address tokenOwner,
         string memory name,
         string memory symbol,
-        uint8 decimals,
-        address implicitModeValidator,
-        bytes32 implicitModeProjectId
+        uint8 decimals
     ) public {
         vm.assume(_proxyOwner != address(0));
         vm.assume(tokenOwner != address(0));
         ERC20ItemsFactory factory = new ERC20ItemsFactory(address(this));
-        address deployedAddr = factory.deploy(
-            _proxyOwner, tokenOwner, name, symbol, decimals, implicitModeValidator, implicitModeProjectId
-        );
-        address predictedAddr = factory.determineAddress(
-            _proxyOwner, tokenOwner, name, symbol, decimals, implicitModeValidator, implicitModeProjectId
-        );
+        address deployedAddr = factory.deploy(_proxyOwner, tokenOwner, name, symbol, decimals);
+        address predictedAddr = factory.determineAddress(_proxyOwner, tokenOwner, name, symbol, decimals);
         assertEq(deployedAddr, predictedAddr);
     }
 
@@ -136,9 +124,7 @@ contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
         token.mint(caller, amount);
     }
 
-    function testMintOwner(
-        uint256 amount
-    ) public {
+    function testMintOwner(uint256 amount) public {
         vm.assume(amount > 0);
 
         vm.expectEmit(true, true, true, false, address(token));
@@ -203,12 +189,9 @@ contract ERC20ItemsTest is TestHelper, IERC20ItemsSignals {
     //
     // Helpers
     //
-    function assumeSafeCaller(
-        address caller
-    ) private view {
+    function assumeSafeCaller(address caller) private view {
         vm.assume(caller != owner);
         vm.assume(caller != proxyOwner);
         vm.assume(caller != address(0));
     }
-
 }
