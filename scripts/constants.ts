@@ -1,4 +1,4 @@
-export const BUILD_DIR = 'out'
+export const BUILD_DIR = 'build'
 export const DEPLOYABLE_CONTRACT_NAMES = [
   'ERC20ItemsFactory',
   'ERC721ItemsFactory',
@@ -11,7 +11,6 @@ export const DEPLOYABLE_CONTRACT_NAMES = [
   'PaymentsFactory',
   'Clawback',
   'ClawbackMetadata',
-  'ERC1155Pack',
 ]
 export const PROXIED_TOKEN_CONTRACT_NAMES = [
   'ERC20Items',
@@ -22,5 +21,4 @@ export const PROXIED_TOKEN_CONTRACT_NAMES = [
   'ERC1155Sale',
   'ERC1155Soulbound',
   'Payments',
-  'ERC1155Pack',
 ]
