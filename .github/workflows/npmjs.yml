@@ -1,7 +1,7 @@
 name: Publish Package to npmjs
 on:
   push:
-    branches: [main]
+    branches: main , master
 jobs:
   publish:
     runs-on: ubuntu-latest # Must run on GitHub-hosted runners
@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm install -g corepack && corepack enable
-      - run: yarn && yarn build
+      - run: yarn install 
       - run: yarn config set npmAuthToken '${{ secrets.NPM_TOKEN }}'
       - run: yarn publish --provenance --tolerate-republish
       
