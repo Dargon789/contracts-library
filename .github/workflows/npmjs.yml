@@ -12,5 +12,5 @@ jobs:
       - run: npm install -g corepack && corepack enable corepack use pnpm@10
       - run: pnpm install && pnpm build
       - run: pnpm config set npmAuthToken '${{ secrets.NPM_TOKEN }}'
-      - run: yarn publish --provenance --tolerate-republish
+      - run: pnpm publish --provenance --tolerate-republish
       
