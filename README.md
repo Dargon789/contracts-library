@@ -1,6 +1,6 @@
 ## PR: Sovereign UX Deployment to Master
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg?branch=contracts-library%2Fmaster)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml)
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg?branch=contracts-library%2Fmaster)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml?query=branch%3Acontracts-library%2Fmaster)
 
 Authorship override initiated by AU_gdev_19. Emotional anchors sealed. Orphan nodes removed.
 
