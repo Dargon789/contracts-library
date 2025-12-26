@@ -1,21 +1,19 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import {ERC1155Items} from "@0xsequence/contracts-library/tokens/ERC1155/presets/items/ERC1155Items.sol";
-import {
-    IERC1155Soulbound,
-    IERC1155SoulboundFunctions
-} from "@0xsequence/contracts-library/tokens/ERC1155/presets/soulbound/IERC1155Soulbound.sol";
+import { ERC1155Items } from "../items/ERC1155Items.sol";
+import { IERC1155Soulbound, IERC1155SoulboundFunctions } from "./IERC1155Soulbound.sol";
+
+import { ERC1155 } from "solady/tokens/ERC1155.sol";
 
 /**
  * An implementation of ERC-1155 that prevents transfers.
  */
 contract ERC1155Soulbound is ERC1155Items, IERC1155Soulbound {
+
     bytes32 public constant TRANSFER_ADMIN_ROLE = keccak256("TRANSFER_ADMIN_ROLE");
 
     bool internal _transferLocked;
-
-    constructor() ERC1155Items() {}
 
     /// @inheritdoc ERC1155Items
     function initialize(
@@ -24,15 +22,28 @@ contract ERC1155Soulbound is ERC1155Items, IERC1155Soulbound {
         string memory tokenBaseURI,
         string memory tokenContractURI,
         address royaltyReceiver,
-        uint96 royaltyFeeNumerator
+        uint96 royaltyFeeNumerator,
+        address implicitModeValidator,
+        bytes32 implicitModeProjectId
     ) public virtual override {
         _transferLocked = true;
         _grantRole(TRANSFER_ADMIN_ROLE, owner);
-        super.initialize(owner, tokenName, tokenBaseURI, tokenContractURI, royaltyReceiver, royaltyFeeNumerator);
+        super.initialize(
+            owner,
+            tokenName,
+            tokenBaseURI,
+            tokenContractURI,
+            royaltyReceiver,
+            royaltyFeeNumerator,
+            implicitModeValidator,
+            implicitModeProjectId
+        );
     }
 
     /// @inheritdoc IERC1155SoulboundFunctions
-    function setTransferLocked(bool locked) external override onlyRole(TRANSFER_ADMIN_ROLE) {
+    function setTransferLocked(
+        bool locked
+    ) external override onlyRole(TRANSFER_ADMIN_ROLE) {
         _transferLocked = locked;
     }
 
@@ -43,24 +54,24 @@ contract ERC1155Soulbound is ERC1155Items, IERC1155Soulbound {
 
     // Transfer hooks
 
-    function _safeTransferFrom(address from, address to, uint256 id, uint256 amount) internal virtual override {
-        // Mint transactions allowed
-        if (_transferLocked && from != address(0)) {
-            revert TransfersLocked();
-        }
-        super._safeTransferFrom(from, to, id, amount);
+    /// @dev Use the beforeTokenTransfer hook to block transfers
+    function _useBeforeTokenTransfer() internal pure override returns (bool) {
+        return true;
     }
 
-    function _safeBatchTransferFrom(address from, address to, uint256[] memory ids, uint256[] memory amounts)
-        internal
-        virtual
-        override
-    {
-        // Mint transactions allowed
+    /// @inheritdoc ERC1155
+    /// @dev Block transfers if the token is soulbound
+    /// @dev Mint transactions allowed
+    function _beforeTokenTransfer(
+        address from,
+        address,
+        uint256[] memory,
+        uint256[] memory,
+        bytes memory
+    ) internal virtual override {
         if (_transferLocked && from != address(0)) {
             revert TransfersLocked();
         }
-        super._safeBatchTransferFrom(from, to, ids, amounts);
     }
 
     function _burn(address from, uint256 id, uint256 amount) internal virtual override {
@@ -79,7 +90,10 @@ contract ERC1155Soulbound is ERC1155Items, IERC1155Soulbound {
 
     // Views
 
-    function supportsInterface(bytes4 interfaceId) public view override returns (bool) {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override returns (bool) {
         return type(IERC1155SoulboundFunctions).interfaceId == interfaceId || super.supportsInterface(interfaceId);
     }
+
 }

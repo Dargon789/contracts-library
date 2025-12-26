@@ -3,9 +3,19 @@ pragma solidity ^0.8.19;
 
 interface IERC1155SaleFunctions {
 
+    struct GlobalSaleDetails {
+        uint256 minTokenId;
+        uint256 maxTokenId;
+        uint256 cost;
+        uint256 remainingSupply;
+        uint64 startTime;
+        uint64 endTime; // 0 end time indicates sale inactive
+        bytes32 merkleRoot; // Root of allowed addresses
+    }
+
     struct SaleDetails {
         uint256 cost;
-        uint256 supplyCap; // 0 supply cap indicates unlimited supply
+        uint256 remainingSupply;
         uint64 startTime;
         uint64 endTime; // 0 end time indicates sale inactive
         bytes32 merkleRoot; // Root of allowed addresses
@@ -17,7 +27,7 @@ interface IERC1155SaleFunctions {
      * @notice Global sales details apply to all tokens.
      * @notice Global sales details are overriden when token sale is active.
      */
-    function globalSaleDetails() external view returns (SaleDetails memory);
+    function globalSaleDetails() external view returns (GlobalSaleDetails memory);
 
     /**
      * Get token sale details.
@@ -25,7 +35,19 @@ interface IERC1155SaleFunctions {
      * @return Sale details.
      * @notice Token sale details override global sale details.
      */
-    function tokenSaleDetails(uint256 tokenId) external view returns (SaleDetails memory);
+    function tokenSaleDetails(
+        uint256 tokenId
+    ) external view returns (SaleDetails memory);
+
+    /**
+     * Get sale details for multiple tokens.
+     * @param tokenIds Array of token IDs to retrieve sale details for.
+     * @return Array of sale details corresponding to each token ID.
+     * @notice Each token's sale details override the global sale details if set.
+     */
+    function tokenSaleDetailsBatch(
+        uint256[] calldata tokenIds
+    ) external view returns (SaleDetails[] memory);
 
     /**
      * Get payment token.
@@ -55,15 +77,25 @@ interface IERC1155SaleFunctions {
         address paymentToken,
         uint256 maxTotal,
         bytes32[] calldata proof
-    )
-        external
-        payable;
+    ) external payable;
+
 }
 
 interface IERC1155SaleSignals {
 
-    event GlobalSaleDetailsUpdated(uint256 cost, uint256 supplyCap, uint64 startTime, uint64 endTime, bytes32 merkleRoot);
-    event TokenSaleDetailsUpdated(uint256 tokenId, uint256 cost, uint256 supplyCap, uint64 startTime, uint64 endTime, bytes32 merkleRoot);
+    event GlobalSaleDetailsUpdated(
+        uint256 minTokenId,
+        uint256 maxTokenId,
+        uint256 cost,
+        uint256 remainingSupply,
+        uint64 startTime,
+        uint64 endTime,
+        bytes32 merkleRoot
+    );
+    event TokenSaleDetailsUpdated(
+        uint256 tokenId, uint256 cost, uint256 remainingSupply, uint64 startTime, uint64 endTime, bytes32 merkleRoot
+    );
+    event ItemsMinted(address to, uint256[] tokenIds, uint256[] amounts);
 
     /**
      * Contract already initialized.
@@ -101,8 +133,11 @@ interface IERC1155SaleSignals {
 
     /**
      * Insufficient supply of tokens.
+     * @param remainingSupply Remaining supply.
+     * @param amount Amount to mint.
      */
-    error InsufficientSupply(uint256 currentSupply, uint256 requestedAmount, uint256 maxSupply);
+    error InsufficientSupply(uint256 remainingSupply, uint256 amount);
+
 }
 
-interface IERC1155Sale is IERC1155SaleFunctions, IERC1155SaleSignals {}
+interface IERC1155Sale is IERC1155SaleFunctions, IERC1155SaleSignals { }

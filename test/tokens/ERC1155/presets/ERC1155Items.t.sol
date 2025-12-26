@@ -1,26 +1,27 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import {stdError} from "forge-std/Test.sol";
-import {TestHelper} from "../../../TestHelper.sol";
+import { TestHelper } from "../../../TestHelper.sol";
 
-import {ERC1155Items} from "src/tokens/ERC1155/presets/items/ERC1155Items.sol";
+import { IERC1155SupplyFunctions } from "src/tokens/ERC1155/extensions/supply/IERC1155Supply.sol";
+import { ERC1155Items } from "src/tokens/ERC1155/presets/items/ERC1155Items.sol";
+import { ERC1155ItemsFactory } from "src/tokens/ERC1155/presets/items/ERC1155ItemsFactory.sol";
 import {
-    IERC1155ItemsSignals,
+    IERC1155Items,
     IERC1155ItemsFunctions,
-    IERC1155Items
+    IERC1155ItemsSignals
 } from "src/tokens/ERC1155/presets/items/IERC1155Items.sol";
-import {ERC1155ItemsFactory} from "src/tokens/ERC1155/presets/items/ERC1155ItemsFactory.sol";
-import {IERC1155SupplyFunctions} from "src/tokens/ERC1155/extensions/supply/IERC1155Supply.sol";
 
-import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import { IERC1155 } from "openzeppelin-contracts/contracts/token/ERC1155/IERC1155.sol";
+import { Strings } from "openzeppelin-contracts/contracts/utils/Strings.sol";
+import { IERC165 } from "openzeppelin-contracts/contracts/utils/introspection/IERC165.sol";
 
-// Interfaces
-import {IERC165} from "@0xsequence/erc-1155/contracts/interfaces/IERC165.sol";
-import {IERC1155} from "@0xsequence/erc-1155/contracts/interfaces/IERC1155.sol";
-import {IERC1155Metadata} from "@0xsequence/erc-1155/contracts/tokens/ERC1155/ERC1155Metadata.sol";
+import { ISignalsImplicitMode } from "signals-implicit-mode/src/helper/SignalsImplicitMode.sol";
+
+import { ERC1155 } from "solady/tokens/ERC1155.sol";
 
 contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
+
     // Redeclare events
     event TransferSingle(
         address indexed _operator, address indexed _from, address indexed _to, uint256 _id, uint256 _amount
@@ -42,28 +43,33 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         vm.deal(owner, 100 ether);
 
         ERC1155ItemsFactory factory = new ERC1155ItemsFactory(address(this));
-        token = ERC1155Items(factory.deploy(proxyOwner, owner, "name", "baseURI", "contractURI", address(this), 0));
+        token = ERC1155Items(
+            factory.deploy(
+                proxyOwner, owner, "name", "baseURI", "contractURI", address(this), 0, address(0), bytes32(0)
+            )
+        );
     }
 
     function testReinitializeFails() public {
         vm.expectRevert(InvalidInitialization.selector);
-        token.initialize(owner, "name", "baseURI", "contractURI", address(this), 0);
+        token.initialize(owner, "name", "baseURI", "contractURI", address(this), 0, address(0), bytes32(0));
     }
 
     function testSupportsInterface() public view {
         assertTrue(token.supportsInterface(type(IERC165).interfaceId));
         assertTrue(token.supportsInterface(type(IERC1155).interfaceId));
-        assertTrue(token.supportsInterface(type(IERC1155Metadata).interfaceId));
         assertTrue(token.supportsInterface(type(IERC1155SupplyFunctions).interfaceId));
         assertTrue(token.supportsInterface(type(IERC1155ItemsFunctions).interfaceId));
+        assertTrue(token.supportsInterface(type(ISignalsImplicitMode).interfaceId));
     }
 
     /**
      * Test all public selectors for collisions against the proxy admin functions.
-     * @dev yarn ts-node scripts/outputSelectors.ts
+     * @dev pnpm ts-node scripts/outputSelectors.ts
      */
     function testSelectorCollision() public pure {
         checkSelectorCollision(0xa217fddf); // DEFAULT_ADMIN_ROLE()
+        checkSelectorCollision(0x9d043a66); // acceptImplicitRequest(address,(address,bytes4,bytes32,bytes32,bytes,(string,uint64)),(address,uint256,bytes,uint256,bool,bool,uint256))
         checkSelectorCollision(0x00fdd58e); // balanceOf(address,uint256)
         checkSelectorCollision(0x4e1273f4); // balanceOfBatch(address[],uint256[])
         checkSelectorCollision(0x6c0360eb); // baseURI()
@@ -76,7 +82,7 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         checkSelectorCollision(0xca15c873); // getRoleMemberCount(bytes32)
         checkSelectorCollision(0x2f2ff15d); // grantRole(bytes32,address)
         checkSelectorCollision(0x91d14854); // hasRole(bytes32,address)
-        checkSelectorCollision(0xf8954818); // initialize(address,string,string,string,address,uint96)
+        checkSelectorCollision(0x8ff83ac1); // initialize(address,string,string,string,address,uint96,address,bytes32)
         checkSelectorCollision(0xe985e9c5); // isApprovedForAll(address,address)
         checkSelectorCollision(0x731133e9); // mint(address,uint256,uint256,bytes)
         checkSelectorCollision(0x06fdde03); // name()
@@ -90,6 +96,8 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         checkSelectorCollision(0x0b5ee006); // setContractName(string)
         checkSelectorCollision(0x938e3d7b); // setContractURI(string)
         checkSelectorCollision(0x04634d8d); // setDefaultRoyalty(address,uint96)
+        checkSelectorCollision(0xed4c2ac7); // setImplicitModeProjectId(bytes32)
+        checkSelectorCollision(0x0bb310de); // setImplicitModeValidator(address)
         checkSelectorCollision(0x5944c753); // setTokenRoyalty(uint256,address,uint96)
         checkSelectorCollision(0x01ffc9a7); // supportsInterface(bytes4)
         checkSelectorCollision(0x2693ebf2); // tokenSupply(uint256)
@@ -102,6 +110,7 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         assertTrue(token.hasRole(keccak256("METADATA_ADMIN_ROLE"), owner));
         assertTrue(token.hasRole(keccak256("MINTER_ROLE"), owner));
         assertTrue(token.hasRole(keccak256("ROYALTY_ADMIN_ROLE"), owner));
+        assertTrue(token.hasRole(keccak256("IMPLICIT_MODE_ADMIN_ROLE"), owner));
     }
 
     function testFactoryDetermineAddress(
@@ -111,17 +120,36 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         string memory baseURI,
         string memory contractURI,
         address royaltyReceiver,
-        uint96 royaltyFeeNumerator
+        uint96 royaltyFeeNumerator,
+        address implicitModeValidator,
+        bytes32 implicitModeProjectId
     ) public {
         vm.assume(_proxyOwner != address(0));
         vm.assume(tokenOwner != address(0));
         vm.assume(royaltyReceiver != address(0));
         royaltyFeeNumerator = uint96(bound(royaltyFeeNumerator, 0, 10_000));
         ERC1155ItemsFactory factory = new ERC1155ItemsFactory(address(this));
-        address deployedAddr =
-            factory.deploy(_proxyOwner, tokenOwner, name, baseURI, contractURI, royaltyReceiver, royaltyFeeNumerator);
+        address deployedAddr = factory.deploy(
+            _proxyOwner,
+            tokenOwner,
+            name,
+            baseURI,
+            contractURI,
+            royaltyReceiver,
+            royaltyFeeNumerator,
+            implicitModeValidator,
+            implicitModeProjectId
+        );
         address predictedAddr = factory.determineAddress(
-            _proxyOwner, tokenOwner, name, baseURI, contractURI, royaltyReceiver, royaltyFeeNumerator
+            _proxyOwner,
+            tokenOwner,
+            name,
+            baseURI,
+            contractURI,
+            royaltyReceiver,
+            royaltyFeeNumerator,
+            implicitModeValidator,
+            implicitModeProjectId
         );
         assertEq(deployedAddr, predictedAddr);
     }
@@ -129,7 +157,6 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
     //
     // Metadata
     //
-
     function testContractURI() external {
         address nonOwner = makeAddr("nonOwner");
         vm.expectRevert(); // Missing role
@@ -144,7 +171,9 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
     //
     // Minting
     //
-    function testMintInvalidRole(address caller) public {
+    function testMintInvalidRole(
+        address caller
+    ) public {
         vm.assume(caller != owner);
         vm.assume(caller != proxyOwner);
 
@@ -253,7 +282,6 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
     //
     // Burn
     //
-
     function testBurnSuccess(address caller, uint256 tokenId, uint256 amount, uint256 burnAmount) public {
         assumeSafeAddress(caller);
         vm.assume(caller != owner);
@@ -284,7 +312,7 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         vm.prank(owner);
         token.mint(caller, tokenId, amount, "");
 
-        vm.expectRevert(stdError.arithmeticError);
+        vm.expectRevert(ERC1155.InsufficientBalance.selector);
         token.burn(tokenId, burnAmount);
     }
 
@@ -341,9 +369,11 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         assertEq(token.totalSupply(), totalAmount - totalBurnAmount);
     }
 
-    function testBurnBatchInvalidOwnership(address caller, uint256[] memory tokenIds, uint256[] memory amounts)
-        public
-    {
+    function testBurnBatchInvalidOwnership(
+        address caller,
+        uint256[] memory tokenIds,
+        uint256[] memory amounts
+    ) public {
         assumeSafeAddress(caller);
         vm.assume(caller != owner);
         vm.assume(caller != proxyOwner);
@@ -369,7 +399,7 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
 
         amounts[0]++; // Now we burn too many
 
-        vm.expectRevert(stdError.arithmeticError);
+        vm.expectRevert(ERC1155.InsufficientBalance.selector);
         token.batchBurn(tokenIds, amounts);
     }
 
@@ -384,7 +414,9 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         assertEq(token.uri(1), "ipfs://newURI/1.json");
     }
 
-    function testMetadataInvalid(address caller) public {
+    function testMetadataInvalid(
+        address caller
+    ) public {
         vm.assume(caller != owner);
         vm.assume(caller != proxyOwner);
         vm.expectRevert(
@@ -399,7 +431,9 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         token.setBaseMetadataURI("ipfs://newURI/");
     }
 
-    function testMetadataWithRole(address caller) public {
+    function testMetadataWithRole(
+        address caller
+    ) public {
         vm.assume(caller != owner);
         vm.assume(caller != proxyOwner);
         vm.assume(caller != address(0));
@@ -524,4 +558,5 @@ contract ERC1155ItemsTest is TestHelper, IERC1155ItemsSignals {
         }
         return arr;
     }
+
 }
