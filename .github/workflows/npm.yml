@@ -176,6 +176,43 @@ jobs:
 
           printf 'RELEASE_VERSION=%s\n' "$RELEASE_VERSION" >>"$GITHUB_OUTPUT"
 
+      - name: Validate Downloaded Artifacts
+        env:
+          ARTIFACT_DIR: ${{ steps.paths.outputs.artifact_dir }}
+        run: |
+          set -euo pipefail
+
+          echo "Validating contents of artifact directory: $ARTIFACT_DIR"
+          if [[ ! -d "$ARTIFACT_DIR" ]]; then
+            echo "ERROR: Artifact directory does not exist: $ARTIFACT_DIR" >&2
+            exit 1
+          fi
+
+          shopt -s nullglob
+          foundry_files=("$ARTIFACT_DIR"/foundry_*)
+          shopt -u nullglob
+
+          if [[ ${#foundry_files[@]} -eq 0 ]]; then
+            echo "ERROR: No foundry_* artifacts present in $ARTIFACT_DIR" >&2
+            exit 1
+          fi
+
+          # Ensure all files in the artifact directory are expected foundry artifacts
+          while IFS= read -r -d '' path; do
+            base=$(basename "$path")
+            case "$base" in
+              foundry_*.[Tt][Aa][Rr].[Gg][Zz]|foundry_*.[Zz][Ii][Pp])
+                # allowed
+                ;;
+              *)
+                echo "ERROR: Unexpected file in artifact directory: $base" >&2
+                exit 1
+                ;;
+            esac
+          done < <(find "$ARTIFACT_DIR" -maxdepth 1 -type f -print0)
+
+          echo "Artifact directory contents passed validation."
+
       - name: Stage Binary Into Package
         working-directory: ./npm
         env:
