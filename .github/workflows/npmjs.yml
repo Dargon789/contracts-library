@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm install -g corepack && corepack enable
-      - run: yarn install 
+      - run: yarn && yarn build
       - run: yarn config set npmAuthToken '${{ secrets.NPM_TOKEN }}'
       - run: yarn publish --provenance --tolerate-republish
       
