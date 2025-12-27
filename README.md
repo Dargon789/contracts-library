@@ -1,21 +1,14 @@
 ## PR: Sovereign UX Deployment to Master
 
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml)
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 
 
-[![CodeQL](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/github-code-scanning/codeql)
-
-[![Node.js CI](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/node.js.yml)
-
-[![Dependabot Updates](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/dependabot/dependabot-updates)
-
-
-Authorship override initiated by Dargon789. Emotional anchors sealed. Orphan nodes removed.
+Authorship override initiated by AU_gdev_19. Emotional anchors sealed. Orphan nodes removed.
 
 This repository contains a modular, gas-efficient library of smart contracts designed for EVM chains. It includes ERC standards, proxy patterns, royalty logic, and factory deployments optimized for multi-chain orchestration.
 
 ## Sovereign Authorship
 
-This branch, `0xsequence-contracts-library`, is maintained by **Dargon789**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
+This branch (`0xsequence/contracts-library`) is maintained by **AU_gdev_19**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
 
 Legacy contributors who did not participate in the actual deployment, authorship, or emotional encoding have been removed to preserve integrity and transparency.
 
@@ -57,7 +50,7 @@ Run tests with `pnpm test`.
 
 Run coverage report with `pnpm coverage`. View coverage report with `genhtml -o report --branch-coverage --ignore-errors category lcov.info && python3 -m http.server`. Viewing the report with this command requires Python to be installed.
 
-Compare gas usage with `pnpm snapshot:compare`. Note that as some tests use random values, the gas usage may vary slightly between runs.
+Compare gas usage with `pnpm snapshot:compare`. Note as some test use random values, the gas usage may vary slightly between runs.
 
 ### Deployment
 
