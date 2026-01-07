@@ -3,7 +3,7 @@ pragma solidity ^0.8.19;
 
 import { MerkleProofSingleUse } from "../../../common/MerkleProofSingleUse.sol";
 import { SignalsImplicitModeControlled } from "../../../common/SignalsImplicitModeControlled.sol";
-import { AccessControlEnumerable, IERC20, SafeERC20, WithdrawControlled } from "../../../common/WithdrawControlled.sol";
+import { IERC20, SafeERC20, WithdrawControlled } from "../../../common/WithdrawControlled.sol";
 import { IERC721ItemsFunctions } from "../../presets/items/IERC721Items.sol";
 import { IERC721Sale, IERC721SaleFunctions } from "./IERC721Sale.sol";
 
@@ -130,7 +130,11 @@ contract ERC721Sale is IERC721Sale, WithdrawControlled, MerkleProofSingleUse, Si
         bytes32[] calldata proof
     ) public payable {
         _validateMint(amount, paymentToken, maxTotal, proof);
-        IERC721ItemsFunctions(_items).mintSequential(to, amount);
+        try IERC721ItemsFunctions(_items).mintSequential(to, amount) { }
+        catch {
+            // On failure, support old minting method.
+            IERC721ItemsFunctions(_items).mint(to, amount);
+        }
         emit ItemsMinted(to, amount);
     }
 

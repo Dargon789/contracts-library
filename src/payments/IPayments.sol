@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 interface IPaymentsFunctions {
-
     enum TokenType {
         ERC20,
         ERC721,
@@ -49,9 +48,7 @@ interface IPaymentsFunctions {
      * @param paymentDetails The payment details.
      * @return paymentHash The hash of the payment details for signing.
      */
-    function hashPaymentDetails(
-        PaymentDetails calldata paymentDetails
-    ) external view returns (bytes32 paymentHash);
+    function hashPaymentDetails(PaymentDetails calldata paymentDetails) external view returns (bytes32 paymentHash);
 
     /**
      * Check is a payment signature is valid.
@@ -59,10 +56,10 @@ interface IPaymentsFunctions {
      * @param signature The signature of the payment.
      * @return isValid True if the signature is valid.
      */
-    function isValidPaymentSignature(
-        PaymentDetails calldata paymentDetails,
-        bytes calldata signature
-    ) external view returns (bool isValid);
+    function isValidPaymentSignature(PaymentDetails calldata paymentDetails, bytes calldata signature)
+        external
+        view
+        returns (bool isValid);
 
     /**
      * Make a payment for a product.
@@ -76,18 +73,17 @@ interface IPaymentsFunctions {
      * @param purchaseId The ID of the purchase.
      * @return accepted True if the payment has been accepted.
      */
-    function paymentAccepted(
-        uint256 purchaseId
-    ) external view returns (bool);
+    function paymentAccepted(uint256 purchaseId) external view returns (bool);
 
     /**
      * Returns the hash of the chained call.
      * @param chainedCallDetails The chained call details.
      * @return callHash The hash of the chained call for signing.
      */
-    function hashChainedCallDetails(
-        ChainedCallDetails calldata chainedCallDetails
-    ) external view returns (bytes32 callHash);
+    function hashChainedCallDetails(ChainedCallDetails calldata chainedCallDetails)
+        external
+        view
+        returns (bytes32 callHash);
 
     /**
      * Complete a chained call.
@@ -103,21 +99,19 @@ interface IPaymentsFunctions {
      * @param signature The signature of the chained call.
      * @return isValid True if the signature is valid.
      */
-    function isValidChainedCallSignature(
-        ChainedCallDetails calldata chainedCallDetails,
-        bytes calldata signature
-    ) external view returns (bool isValid);
+    function isValidChainedCallSignature(ChainedCallDetails calldata chainedCallDetails, bytes calldata signature)
+        external
+        view
+        returns (bool isValid);
 
     /**
      * Get the signer address.
      * @return signer The signer address.
      */
     function signer() external view returns (address);
-
 }
 
 interface IPaymentsSignals {
-
     /// @notice Emitted when contract is already initialized.
     error InvalidInitialization();
 
@@ -140,7 +134,6 @@ interface IPaymentsSignals {
     event PaymentMade(
         address indexed spender, address indexed productRecipient, uint256 indexed purchaseId, string productId
     );
-
 }
 
-interface IPayments is IPaymentsFunctions, IPaymentsSignals { }
+interface IPayments is IPaymentsFunctions, IPaymentsSignals {}
