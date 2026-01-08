@@ -4,14 +4,5 @@
     "editor.defaultFormatter": "JuanBlanco.solidity"
   },
   "solidity.formatter": "forge",
-  "solidity.compileUsingRemoteVersion": "v0.8.27",
-  "solidity.remappings": [
-    "erc2470-libs/=lib/erc2470-libs/",
-    "openzeppelin-contracts/=lib/openzeppelin-contracts/",
-    "openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
-    "forge-std/=lib/forge-std/src/",
-    "murky/=lib/murky/",
-    "solady/=lib/solady/src/",
-    "signals-implicit-mode/=lib/signals-implicit-mode/"
-  ]
+  "solidity.compileUsingRemoteVersion": "v0.8.19"
 }

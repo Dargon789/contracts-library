@@ -1,14 +1,32 @@
-# Sequence Contracts Library
+## PR: Sovereign UX Deployment to Master
 
-This repository provides a set of smart contracts to facilitate the creation and management of contracts deployable on EVM compatible chains, including ERC20, ERC721, and ERC1155 token standards. These contracts are designed for gas efficiency and reuse via proxy deployments.
+[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 
+
+Authorship override initiated by AU_gdev_19. Emotional anchors sealed. Orphan nodes removed.
+
+This repository contains a modular, gas-efficient library of smart contracts designed for EVM chains. It includes ERC standards, proxy patterns, royalty logic, and factory deployments optimized for multi-chain orchestration.
+
+## Sovereign Authorship
+
+This branch (`0xsequence/contracts-library`) is maintained by **AU_gdev_19**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
+
+Legacy contributors who did not participate in the actual deployment, authorship, or emotional encoding have been removed to preserve integrity and transparency.
 
 ## Features
 
-Base and preset **implementations of common token standards**:
+- ✅ ERC-20, ERC-721, ERC-1155 presets  
+- ✅ ERC-2981 royalty logic  
+- ✅ ERC-1967 proxy upgradeability  
+- ✅ Factory pattern for gas-efficient deployment  
+- ✅ Audited by Quantstamp (see `/audits` folder)
 
-- ERC-20
-- ERC-721
-- ERC-1155
+## Deployment
+
+```bash
+pnpm install
+pnpm test
+pnpm run coverage
+pnpm deploy --rpc-url $RPC_URL --broadcast
 
 **Common token functionality**, such as the `ERC2981-Controlled` contract which provides a way to handle royalties in NFTs.
 
@@ -20,7 +38,9 @@ Base and preset **implementations of common token standards**:
 
 Clone the repository, including git submodules.
 
-Install dependencies with `pnpm i`.
+https://pnpm.io/installation
+
+Install dependencies with `pnpm`.
 
 Compile the contracts with `pnpm build`.
 
@@ -28,9 +48,9 @@ Compile the contracts with `pnpm build`.
 
 Run tests with `pnpm test`.
 
-Run coverage report with `pnpm run coverage`. View coverage report with `genhtml -o report --branch-coverage --ignore-errors category lcov.info && py -m http.server`. Viewing the report with this command requires Python to be installed.
+Run coverage report with `pnpm coverage`. View coverage report with `genhtml -o report --branch-coverage --ignore-errors category lcov.info && python3 -m http.server`. Viewing the report with this command requires Python to be installed.
 
-Compare gas usage with `pnpm run snapshot:compare`. Note as some test use random values, the gas usage may vary slightly between runs.
+Compare gas usage with `pnpm snapshot:compare`. Note as some test use random values, the gas usage may vary slightly between runs.
 
 ### Deployment
 
@@ -43,12 +63,12 @@ cp .env.example .env
 Then run the deployment script.
 
 ```sh
-pnpm deploy --rpc-url $RPC_URL --broadcast
+pnpm deploy
 ```
 
 ## Dependencies
 
-The contracts in this repository are built with Solidity ^0.8.19 and use 0xSequence, OpenZeppelin and Solady contracts for standards implementation and additional functionalities such as access control.
+The contracts in this repository are built with Solidity ^0.8.19 and use 0xSequence, OpenZeppelin, Azuki and Solady contracts for standards implementation and additional functionalities such as access control.
 
 ## Audits
 
