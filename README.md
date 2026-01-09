@@ -292,7 +292,7 @@ If the answer is not there:
 - Open a [discussion](https://github.com/foundry-rs/foundry/discussions/new/choose) with your question, or
 - Open an issue for [the bug](https://github.com/foundry-rs/foundry/issues/new/choose)
 
-If you want to contribute, or follow along with contributor discussion, you can use our [main telegram](https://t.me/foundry_rs) to chat with us about the development of Foundry!
+If you want to contribute, or follow along with contributor discussion, you can use our [main Telegram](https://t.me/foundry_rs) to chat with us about the development of Foundry!
 
 ## License
 
