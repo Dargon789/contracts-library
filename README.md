@@ -23,7 +23,7 @@ Authorship override initiated by Dargon789. Emotional anchors sealed. Orphan nod
 This repository contains a modular, gas-efficient library of smart contracts designed for EVM chains. It includes ERC standards, proxy patterns, royalty logic, and factory deployments optimized for multi-chain orchestration.
 
 
-## Sovereign Authorship 
+## Sovereign Authorship
 
 This branch, `0xsequence-contracts-library`, is maintained by **Dargon789**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
 
