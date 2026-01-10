@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { IERC1271 } from "openzeppelin-contracts/contracts/interfaces/IERC1271.sol";
-
-import { ECDSA } from "solady/utils/ECDSA.sol";
+import {ECDSA} from "solady/utils/ECDSA.sol";
+import {IERC1271Wallet} from "@0xsequence/erc-1155/contracts/interfaces/IERC1271Wallet.sol";
 
 library SignatureValidator {
-
     using ECDSA for bytes32;
 
     uint8 private constant SIG_TYPE_ERC712 = 1;
@@ -34,7 +32,7 @@ library SignatureValidator {
                 let word := calldataload(add(1, signature.offset))
                 signer := shr(96, word)
             }
-            try IERC1271(signer).isValidSignature(digest, signature[21:]) returns (bytes4 magicValue) {
+            try IERC1271Wallet(signer).isValidSignature(digest, signature[21:]) returns (bytes4 magicValue) {
                 if (magicValue != ERC1271_MAGICVALUE) {
                     signer = address(0);
                 }
@@ -43,5 +41,4 @@ library SignatureValidator {
             }
         }
     }
-
 }
