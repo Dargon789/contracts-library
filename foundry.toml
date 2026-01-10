@@ -2,9 +2,14 @@
 src = 'src'
 out = 'out'
 libs = ['lib']
+<<<<<<< Updated upstream
 solc = "0.8.27"
 solc-version = "0.8.27"
 evm_version = "paris"
+=======
+solc = "0.8.19"
+solc-version = "0.8.19"
+>>>>>>> Stashed changes
 via_ir = true
 use_literal_content = true
 

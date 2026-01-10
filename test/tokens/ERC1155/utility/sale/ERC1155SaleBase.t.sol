@@ -1,24 +1,39 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { TestHelper } from "../../../../TestHelper.sol";
-import { ERC20Mock } from "../../../../_mocks/ERC20Mock.sol";
+import {stdError} from "forge-std/Test.sol";
+import {TestHelper} from "../../../../TestHelper.sol";
 
+<<<<<<< Updated upstream
 import { IERC1155Supply, IERC1155SupplySignals } from "src/tokens/ERC1155/extensions/supply/IERC1155Supply.sol";
 import { ERC1155Items } from "src/tokens/ERC1155/presets/items/ERC1155Items.sol";
 import { ERC1155Sale, IERC1155Sale } from "src/tokens/ERC1155/utility/sale/ERC1155Sale.sol";
 import { ERC1155SaleFactory } from "src/tokens/ERC1155/utility/sale/ERC1155SaleFactory.sol";
+=======
+import {IERC1155SaleSignals, IERC1155SaleFunctions} from "src/tokens/ERC1155/utility/sale/IERC1155Sale.sol";
+import {ERC1155Sale} from "src/tokens/ERC1155/utility/sale/ERC1155Sale.sol";
+import {ERC1155SaleFactory} from "src/tokens/ERC1155/utility/sale/ERC1155SaleFactory.sol";
+import {IERC1155SupplySignals, IERC1155Supply} from "src/tokens/ERC1155/extensions/supply/IERC1155Supply.sol";
+import {ERC1155Items} from "src/tokens/ERC1155/presets/items/ERC1155Items.sol";
+>>>>>>> Stashed changes
 
-import { IAccessControl } from "openzeppelin-contracts/contracts/access/IAccessControl.sol";
-import { Strings } from "openzeppelin-contracts/contracts/utils/Strings.sol";
-import { IERC165 } from "openzeppelin-contracts/contracts/utils/introspection/IERC165.sol";
+import {ERC20Mock} from "@0xsequence/erc20-meta-token/contracts/mocks/ERC20Mock.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
-import { ISignalsImplicitMode } from "signals-implicit-mode/src/helper/SignalsImplicitMode.sol";
+// Interfaces
+import {IERC165} from "@0xsequence/erc-1155/contracts/interfaces/IERC165.sol";
+import {IERC1155} from "@0xsequence/erc-1155/contracts/interfaces/IERC1155.sol";
+import {IERC1155Metadata} from "@0xsequence/erc-1155/contracts/tokens/ERC1155/ERC1155Metadata.sol";
+import {IAccessControl} from "@openzeppelin/contracts/access/IAccessControl.sol";
 
 // solhint-disable not-rely-on-time
 
+<<<<<<< Updated upstream
 contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
 
+=======
+contract ERC1155SaleTest is TestHelper, IERC1155SaleSignals, IERC1155SupplySignals {
+>>>>>>> Stashed changes
     // Redeclare events
     event TransferSingle(
         address indexed _operator, address indexed _from, address indexed _to, uint256 _id, uint256 _amount
@@ -37,10 +52,10 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
         proxyOwner = makeAddr("proxyOwner");
 
         token = new ERC1155Items();
-        token.initialize(address(this), "test", "ipfs://", "ipfs://", address(this), 0, address(0), bytes32(0));
+        token.initialize(address(this), "test", "ipfs://", "ipfs://", address(this), 0);
 
         sale = new ERC1155Sale();
-        sale.initialize(address(this), address(token), address(0), bytes32(0));
+        sale.initialize(address(this), address(token));
 
         token.grantRole(keccak256("MINTER_ROLE"), address(sale));
 
@@ -49,31 +64,39 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
 
     function setUpFromFactory() public {
         ERC1155SaleFactory factory = new ERC1155SaleFactory(address(this));
-        sale = ERC1155Sale(factory.deploy(0, proxyOwner, address(this), address(token), address(0), bytes32(0)));
+        sale = ERC1155Sale(factory.deploy(proxyOwner, address(this), address(token)));
         token.grantRole(keccak256("MINTER_ROLE"), address(sale));
     }
 
     function testSupportsInterface() public view {
         assertTrue(sale.supportsInterface(type(IERC165).interfaceId));
         assertTrue(sale.supportsInterface(type(IAccessControl).interfaceId));
+<<<<<<< Updated upstream
         assertTrue(sale.supportsInterface(type(IERC1155Sale).interfaceId));
         assertTrue(sale.supportsInterface(type(ISignalsImplicitMode).interfaceId));
+=======
+        assertTrue(sale.supportsInterface(type(IERC1155SaleFunctions).interfaceId));
+>>>>>>> Stashed changes
     }
 
     /**
      * Test all public selectors for collisions against the proxy admin functions.
-     * @dev pnpm ts-node scripts/outputSelectors.ts
+     * @dev yarn ts-node scripts/outputSelectors.ts
      */
     function testSelectorCollision() public pure {
         checkSelectorCollision(0xa217fddf); // DEFAULT_ADMIN_ROLE()
+<<<<<<< Updated upstream
         checkSelectorCollision(0x9d043a66); // acceptImplicitRequest(address,(address,bytes4,bytes32,bytes32,bytes,(string,uint64)),(address,uint256,bytes,uint256,bool,bool,uint256))
         checkSelectorCollision(0x436013db); // addSaleDetails((uint256,uint256,uint256,address,uint256,uint64,uint64,bytes32))
+=======
+>>>>>>> Stashed changes
         checkSelectorCollision(0xbad43661); // checkMerkleProof(bytes32,bytes32[],address,bytes32)
         checkSelectorCollision(0x248a9ca3); // getRoleAdmin(bytes32)
         checkSelectorCollision(0x9010d07c); // getRoleMember(bytes32,uint256)
         checkSelectorCollision(0xca15c873); // getRoleMemberCount(bytes32)
         checkSelectorCollision(0x2f2ff15d); // grantRole(bytes32,address)
         checkSelectorCollision(0x91d14854); // hasRole(bytes32,address)
+<<<<<<< Updated upstream
         checkSelectorCollision(0x63acc14d); // initialize(address,address,address,bytes32)
         checkSelectorCollision(0xddced6e7); // mint(address,uint256[],uint256[],bytes,uint256[],address,uint256,bytes32[][])
         checkSelectorCollision(0x36568abe); // renounceRole(bytes32,address)
@@ -85,30 +108,33 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
         checkSelectorCollision(0x0bb310de); // setImplicitModeValidator(address)
         checkSelectorCollision(0x01ffc9a7); // supportsInterface(bytes4)
         checkSelectorCollision(0x26f63107); // updateSaleDetails(uint256,(uint256,uint256,uint256,address,uint256,uint64,uint64,bytes32))
+=======
+        checkSelectorCollision(0x485cc955); // initialize(address,address)
+        checkSelectorCollision(0x60e606f6); // mint(address,uint256[],uint256[],bytes,address,uint256,bytes32[])
+        checkSelectorCollision(0x3013ce29); // paymentToken()
+        checkSelectorCollision(0x36568abe); // renounceRole(bytes32,address)
+        checkSelectorCollision(0xd547741f); // revokeRole(bytes32,address)
+        checkSelectorCollision(0x97559600); // setGlobalSaleDetails(uint256,uint256,uint64,uint64,bytes32)
+        checkSelectorCollision(0x6a326ab1); // setPaymentToken(address)
+        checkSelectorCollision(0x4f651ccd); // setTokenSaleDetails(uint256,uint256,uint256,uint64,uint64,bytes32)
+        checkSelectorCollision(0x01ffc9a7); // supportsInterface(bytes4)
+        checkSelectorCollision(0x0869678c); // tokenSaleDetails(uint256)
+>>>>>>> Stashed changes
         checkSelectorCollision(0x44004cc1); // withdrawERC20(address,address,uint256)
         checkSelectorCollision(0x4782f779); // withdrawETH(address,uint256)
     }
 
-    function testFactoryDetermineAddress(
-        uint256 nonce,
-        address _proxyOwner,
-        address tokenOwner,
-        address items,
-        address implicitModeValidator,
-        bytes32 implicitModeProjectId
-    ) public {
+    function testFactoryDetermineAddress(address _proxyOwner, address tokenOwner, address items) public {
         vm.assume(_proxyOwner != address(0));
         vm.assume(tokenOwner != address(0));
         ERC1155SaleFactory factory = new ERC1155SaleFactory(address(this));
-        address deployedAddr =
-            factory.deploy(nonce, _proxyOwner, tokenOwner, items, implicitModeValidator, implicitModeProjectId);
-        address predictedAddr = factory.determineAddress(
-            nonce, _proxyOwner, tokenOwner, items, implicitModeValidator, implicitModeProjectId
-        );
+        address deployedAddr = factory.deploy(_proxyOwner, tokenOwner, items);
+        address predictedAddr = factory.determineAddress(_proxyOwner, tokenOwner, items);
         assertEq(deployedAddr, predictedAddr);
     }
 
     //
+<<<<<<< Updated upstream
     // Admin
     //
     function test_addSaleDetails_success(
@@ -255,6 +281,8 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
     }
 
     //
+=======
+>>>>>>> Stashed changes
     // Withdraw
     //
 
@@ -272,7 +300,7 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
         vm.expectRevert(revertString);
         sale.withdrawETH(withdrawTo, amount);
 
-        ERC20Mock erc20 = new ERC20Mock(address(this));
+        ERC20Mock erc20 = new ERC20Mock();
 
         vm.expectRevert(revertString);
         sale.withdrawERC20(address(erc20), withdrawTo, amount);
@@ -298,8 +326,8 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
         assumeSafeAddress(withdrawTo);
 
         address _sale = address(sale);
-        ERC20Mock erc20 = new ERC20Mock(address(this));
-        erc20.mint(_sale, amount);
+        ERC20Mock erc20 = new ERC20Mock();
+        erc20.mockMint(_sale, amount);
 
         uint256 saleBalance = erc20.balanceOf(_sale);
         uint256 balance = erc20.balanceOf(withdrawTo);
@@ -311,9 +339,7 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
     //
     // Helpers
     //
-    modifier withFactory(
-        bool useFactory
-    ) {
+    modifier withFactory(bool useFactory) {
         if (useFactory) {
             setUpFromFactory();
         }
@@ -348,5 +374,4 @@ contract ERC1155SaleBaseTest is TestHelper, IERC1155SupplySignals {
         assertEq(actual.endTime, expected.endTime);
         assertEq(actual.merkleRoot, expected.merkleRoot);
     }
-
 }

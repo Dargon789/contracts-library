@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
+<<<<<<< Updated upstream
 interface IERC1155Sale {
 
     /**
@@ -23,19 +24,33 @@ interface IERC1155Sale {
         uint64 startTime;
         uint64 endTime;
         bytes32 merkleRoot;
+=======
+interface IERC1155SaleFunctions {
+    struct SaleDetails {
+        uint256 cost;
+        uint256 supplyCap; // 0 supply cap indicates unlimited supply
+        uint64 startTime;
+        uint64 endTime; // 0 end time indicates sale inactive
+        bytes32 merkleRoot; // Root of allowed addresses
+>>>>>>> Stashed changes
     }
 
     /**
      * Get the total number of sale details.
      * @return Total number of sale details.
      */
+<<<<<<< Updated upstream
     function saleDetailsCount() external view returns (uint256);
+=======
+    function globalSaleDetails() external view returns (SaleDetails memory);
+>>>>>>> Stashed changes
 
     /**
      * Get sale details.
      * @param saleIndex Index of the sale details to get.
      * @return details Sale details.
      */
+<<<<<<< Updated upstream
     function saleDetails(
         uint256 saleIndex
     ) external view returns (SaleDetails memory details);
@@ -48,6 +63,9 @@ interface IERC1155Sale {
     function saleDetailsBatch(
         uint256[] calldata saleIndexes
     ) external view returns (SaleDetails[] memory details);
+=======
+    function tokenSaleDetails(uint256 tokenId) external view returns (SaleDetails memory);
+>>>>>>> Stashed changes
 
     /**
      * Add new sale details.
@@ -89,6 +107,7 @@ interface IERC1155Sale {
         uint256 maxTotal,
         bytes32[][] calldata proofs
     ) external payable;
+<<<<<<< Updated upstream
 
     /**
      * Emitted when sale details are added.
@@ -112,6 +131,17 @@ interface IERC1155Sale {
      * @param saleIndexes Sale indexes that were minted from.
      */
     event ItemsMinted(address to, uint256[] tokenIds, uint256[] amounts, uint256[] saleIndexes);
+=======
+}
+
+interface IERC1155SaleSignals {
+    event GlobalSaleDetailsUpdated(
+        uint256 cost, uint256 supplyCap, uint64 startTime, uint64 endTime, bytes32 merkleRoot
+    );
+    event TokenSaleDetailsUpdated(
+        uint256 tokenId, uint256 cost, uint256 supplyCap, uint64 startTime, uint64 endTime, bytes32 merkleRoot
+    );
+>>>>>>> Stashed changes
 
     /**
      * Contract already initialized.
@@ -143,9 +173,8 @@ interface IERC1155Sale {
 
     /**
      * Insufficient supply of tokens.
-     * @param remainingSupply Remaining supply.
-     * @param amount Amount to mint.
      */
+<<<<<<< Updated upstream
     error InsufficientSupply(uint256 remainingSupply, uint256 amount);
 
     /**
@@ -164,3 +193,9 @@ interface IERC1155Sale {
     error PaymentTokenMismatch();
 
 }
+=======
+    error InsufficientSupply(uint256 currentSupply, uint256 requestedAmount, uint256 maxSupply);
+}
+
+interface IERC1155Sale is IERC1155SaleFunctions, IERC1155SaleSignals {}
+>>>>>>> Stashed changes
