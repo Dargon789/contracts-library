@@ -311,8 +311,8 @@ Forge Standard Library is offered under either the [MIT](LICENSE-MIT) or the [Ap
 ```bash
 pnpm install
 pnpm test
-pnpm run coverage
-pnpm deploy --rpc-url $RPC_URL --broadcast
+pnpm coverage
+pnpm deploy
 
 **Common token functionality**, such as the `ERC2981-Controlled` contract which provides a way to handle royalties in NFTs.
 
