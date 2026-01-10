@@ -5,9 +5,9 @@
 
 pragma solidity ^0.8.19;
 
-import "openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Upgrade.sol";
-import "openzeppelin-contracts/contracts/proxy/Proxy.sol";
-import "openzeppelin-contracts/contracts/proxy/beacon/IBeacon.sol";
+import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
+import "@openzeppelin/contracts/proxy/Proxy.sol";
+import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol";
 
 /**
  * @dev This contract implements a proxy that gets the implementation address for each call from an {UpgradeableBeacon}.
@@ -18,7 +18,6 @@ import "openzeppelin-contracts/contracts/proxy/beacon/IBeacon.sol";
  * _Available since v3.4._
  */
 contract BeaconProxy is Proxy, ERC1967Upgrade {
-
     /**
      * @dev Returns the current beacon address.
      */
@@ -46,5 +45,4 @@ contract BeaconProxy is Proxy, ERC1967Upgrade {
     function _setBeacon(address beacon, bytes memory data) internal virtual {
         _upgradeBeaconToAndCall(beacon, data, false);
     }
-
 }

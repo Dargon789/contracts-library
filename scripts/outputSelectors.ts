@@ -5,7 +5,7 @@ const { spawn } = require('child_process')
 const outputSelectors = (contractName: string) => {
   const inspect = spawn('forge', [
     'inspect',
-    '--json',
+    '--pretty',
     contractName,
     'method_identifiers',
   ])
