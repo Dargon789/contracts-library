@@ -295,10 +295,10 @@ Forge Standard Library is offered under either the [MIT](LICENSE-MIT) or the [Ap
 
 ## Features
 
-- ✅ ERC-20, ERC-721, ERC-1155 presets  
-- ✅ ERC-2981 royalty logic  
-- ✅ ERC-1967 proxy upgradeability  
-- ✅ Factory pattern for gas-efficient deployment  
+- ✅ ERC-20, ERC-721, ERC-1155 presets
+- ✅ ERC-2981 royalty logic
+- ✅ ERC-1967 proxy upgradeability
+- ✅ Factory pattern for gas-efficient deployment
 - ✅ Audited by Quantstamp (see `/audits` folder)
 
 ## Deployment
