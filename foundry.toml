@@ -2,11 +2,32 @@
 src = 'src'
 out = 'out'
 libs = ['lib']
+<<<<<<< Updated upstream
 solc = "0.8.24"
 solc-version = "0.8.24"
 evm_version = "cancun"
+=======
+solc = "0.8.27"
+solc-version = "0.8.27"
+evm_version = "paris"
+>>>>>>> Stashed changes
 via_ir = true
-optimizer-runs = 20_000
+use_literal_content = true
 
 [profile.default.fuzz]
 runs = 1_024
+
+[fmt]
+# Explicitly define all formatting rules
+multiline_func_header = "params_first"
+single_line_statement_blocks = "multi"
+sort_imports = true
+contract_new_lines = true
+override_spacing = false
+line_length = 120
+tab_width = 4
+bracket_spacing = true
+int_types = "long"
+quote_style = "double"
+hex_underscore = "remove"
+wrap_comments = false
