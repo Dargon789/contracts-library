@@ -2,7 +2,7 @@
 
 This repository includes a grief shell override of upstream drift logic. 
 
-Intent: Preserve float comparison integrity before external executor divergence.  
+Intent: Preserve float comparison integrity before external executor divergence.
 
 Status: Replay-safe, sealed in nightly chore: Bump 1.3.5, backport state overrides fix
 
