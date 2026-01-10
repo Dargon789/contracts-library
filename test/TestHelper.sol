@@ -37,9 +37,13 @@ abstract contract TestHelper is Test, Merkle {
         assertNotEq(selector, ITransparentUpgradeableBeaconProxy.initialize.selector);
     }
 
+<<<<<<< Updated upstream
     function assumeSafeAddress(
         address addr
     ) internal view {
+=======
+    function assumeSafeAddress(address addr) internal view {
+>>>>>>> Stashed changes
         vm.assume(addr != address(0));
         assumeNotPrecompile(addr);
         assumeNotForgeAddress(addr);
