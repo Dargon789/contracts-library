@@ -321,7 +321,7 @@ Clone the repository, including git submodules.
 
 https://pnpm.io/installation
 
-Install dependencies with `pnpm`.
+Install dependencies with `pnpm install`.
 
 Compile the contracts with `pnpm build`.
 
