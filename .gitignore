@@ -13,11 +13,6 @@ yarn-error.log
 
 # Env vars
 .env
-/lib
-/lib
-/lib
-/lib
-/lib
-/lib
-*.tgz
-/counter
+.env.example
+*.toml
+*.lock
