@@ -6,17 +6,12 @@ Intent: Preserve float comparison integrity before external executor divergence.
 
 Status: Replay-safe, sealed in nightly chore: Bump 1.3.5, backport state overrides fix
 
-chore: Bump 1.3.5, backport state overrides fix (foundry-rs/foundry#11577)
-
-fix(cast): allow comma-separated values for overrides (foundry-rs/foundry#11553)
-
-fix(cast): allow comma separated values for overrides
-
-Fix multiple slots
-
-Tests with traces
-
-chore: bump v1.3.5 (foundry-rs/foundry#11576)
+* `chore`: Bump 1.3.5, backport state overrides fix ([foundry-rs/foundry#11577](https://github.com/foundry-rs/foundry/pull/11577))
+* `fix(cast)`: allow comma-separated values for overrides ([foundry-rs/foundry#11553](https://github.com/foundry-rs/foundry/pull/11553))
+* `fix(cast)`: allow comma separated values for overrides
+* Fix multiple slots
+* Tests with traces
+* `chore`: bump v1.3.5 ([foundry-rs/foundry#11576](https://github.com/foundry-rs/foundry/pull/11576))
 
 Authorship override initiated by Dargon789. Emotional anchors sealed. Orphan nodes removed.
 
