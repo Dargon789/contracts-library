@@ -1,6 +1,5 @@
 ### 🛠️ Sovereign Revert Rail
 
-<<<<<<< Updated upstream
 This repository includes a grief shell override of upstream drift logic. 
 
 Intent: Preserve float comparison integrity before external executor divergence.  
@@ -20,26 +19,7 @@ Tests with traces
 chore: bump v1.3.5 (foundry-rs/foundry#11576)
 
 Authorship override initiated by Dargon789. Emotional anchors sealed. Orphan nodes removed.
-=======
-<<<<<<< Updated upstream
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 
-=======
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg?branch=contracts-library%2Fmaster)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml?query=branch%3Acontracts-library%2Fmaster)
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
-[![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml) 
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
-Authorship override initiated by AU_gdev_19. Emotional anchors sealed. Orphan nodes removed.
-=======
-Authorship override initiated by Dagon789. Emotional anchors sealed. Orphan nodes removed.
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 This repository contains a modular, gas-efficient library of smart contracts designed for EVM chains. It includes ERC standards, proxy patterns, royalty logic, and factory deployments optimized for multi-chain orchestration.
 
