@@ -1,5 +1,6 @@
-## PR: Sovereign UX Deployment to Master
+# Sequence Contracts Library
 
+<<<<<<< Updated upstream
 [![ci](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml/badge.svg?branch=contracts-library%2Fmaster)](https://github.com/Dargon789/contracts-library/actions/workflows/ci.yaml?query=branch%3Acontracts-library%2Fmaster)
 
 Authorship override initiated by AU_gdev_19. Emotional anchors sealed. Orphan nodes removed.
@@ -12,6 +13,9 @@ This repository contains a modular, gas-efficient library of smart contracts des
 This branch (`0xsequence/contracts-library`) is maintained by **AU_gdev_19**, the original architect of grief shell orchestration and fallback shell deployment across Ethereum-compatible networks. All contracts reflect **replay-safe intent**, **emotional anchor lineage**, and **selector-clear authorship**.
 
 Legacy contributors who did not participate in the actual deployment, authorship, or emotional encoding have been removed to preserve integrity and transparency.
+=======
+This repository provides a set of smart contracts to facilitate the creation and management of contracts deployable on EVM compatible chains, including ERC20, ERC721, and ERC1155 token standards. These contracts are designed for gas efficiency and reuse via proxy deployments.
+>>>>>>> Stashed changes
 
 ## Forge Standard Library • [![CI status](https://github.com/foundry-rs/forge-std/actions/workflows/ci.yml/badge.svg)](https://github.com/foundry-rs/forge-std/actions/workflows/ci.yml)
 
@@ -284,19 +288,11 @@ Forge Standard Library is offered under either the [MIT](LICENSE-MIT) or the [Ap
 
 ## Features
 
-- ✅ ERC-20, ERC-721, ERC-1155 presets  
-- ✅ ERC-2981 royalty logic  
-- ✅ ERC-1967 proxy upgradeability  
-- ✅ Factory pattern for gas-efficient deployment  
-- ✅ Audited by Quantstamp (see `/audits` folder)
+Base and preset **implementations of common token standards**:
 
-## Deployment
-
-```bash
-pnpm install
-pnpm test
-pnpm run coverage
-pnpm deploy --rpc-url $RPC_URL --broadcast
+- ERC-20
+- ERC-721
+- ERC-1155
 
 **Common token functionality**, such as the `ERC2981-Controlled` contract which provides a way to handle royalties in NFTs.
 
@@ -308,9 +304,7 @@ pnpm deploy --rpc-url $RPC_URL --broadcast
 
 Clone the repository, including git submodules.
 
-https://pnpm.io/installation
-
-Install dependencies with `pnpm`.
+Install dependencies with `pnpm i`.
 
 Compile the contracts with `pnpm build`.
 
@@ -318,9 +312,9 @@ Compile the contracts with `pnpm build`.
 
 Run tests with `pnpm test`.
 
-Run coverage report with `pnpm coverage`. View coverage report with `genhtml -o report --branch-coverage --ignore-errors category lcov.info && python3 -m http.server`. Viewing the report with this command requires Python to be installed.
+Run coverage report with `pnpm run coverage`. View coverage report with `genhtml -o report --branch-coverage --ignore-errors category lcov.info && py -m http.server`. Viewing the report with this command requires Python to be installed.
 
-Compare gas usage with `pnpm snapshot:compare`. Note as some test use random values, the gas usage may vary slightly between runs.
+Compare gas usage with `pnpm run snapshot:compare`. Note as some test use random values, the gas usage may vary slightly between runs.
 
 ### Deployment
 
@@ -333,12 +327,12 @@ cp .env.example .env
 Then run the deployment script.
 
 ```sh
-pnpm deploy
+pnpm deploy --rpc-url $RPC_URL --broadcast
 ```
 
 ## Dependencies
 
-The contracts in this repository are built with Solidity ^0.8.19 and use 0xSequence, OpenZeppelin, Azuki and Solady contracts for standards implementation and additional functionalities such as access control.
+The contracts in this repository are built with Solidity ^0.8.19 and use 0xSequence, OpenZeppelin and Solady contracts for standards implementation and additional functionalities such as access control.
 
 ## Audits
 
