@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { LibString } from "solady/utils/LibString.sol";
+import {LibString} from "solady/utils/LibString.sol";
 
 library Duration {
-
     using LibString for *;
 
-    function format(
-        uint256 totalSeconds
-    ) internal pure returns (string memory) {
+    function format(uint256 totalSeconds) internal pure returns (string memory) {
         uint256 d = totalSeconds / (24 * 60 * 60);
         uint256 h = (totalSeconds % (24 * 60 * 60)) / (60 * 60);
         uint256 m = (totalSeconds % (60 * 60)) / 60;
@@ -38,5 +35,4 @@ library Duration {
 
         return result;
     }
-
 }
