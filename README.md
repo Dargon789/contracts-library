@@ -119,7 +119,7 @@ contract TestContract is Test {
 
     // It supports arbitrary storage layouts, like assembly based storage locations
     function testFindHidden() public {
-        // `hidden` is a random hash of a bytes, iteration through slots would
+        // `hidden` is a random hash of a bytes value, iteration through slots would
         // not find it. Our mechanism does
         // Also, you can use the selector instead of a string
         uint256 slot = stdstore.target(address(test)).sig(test.hidden.selector).find();
