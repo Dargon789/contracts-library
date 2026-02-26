@@ -70,7 +70,7 @@ contract ErrorsTest {
 }
 ```
 
-### stdStorage
+This is a rather large contract due to all of the overloading to make the UX decent. Primarily, it is a wrapper around the `record` and `accesses` cheatcodes. It can _always_ find and write the storage slot(s) associated with a particular variable without knowing the storage layout. The one major caveat is that while a slot can be found for packed storage variables, writing to them safely is not possible. If an attempt is made to write to a packed slot, the execution will throw an error, unless the slot is uninitialized (`bytes32(0)`).
 
 This is a rather large contract due to all of the overloading to make the UX decent. Primarily, it is a wrapper around the `record` and `accesses` cheatcodes. It can _always_ find and write the storage slot(s) associated with a particular variable without knowing the storage layout. The one _major_ caveat to this is that while a slot can be found for packed storage variables, we can't write to that variable safely. If a user tries to write to a packed slot, the execution throws an error, unless it is uninitialized (`bytes32(0)`).
 
