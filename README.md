@@ -291,7 +291,7 @@ If you want to contribute, or follow along with contributor discussion, you can 
 
 ## License
 
-Forge Standard Library is offered under either the [MIT](LICENSE-MIT) or the [Apache 2.0](LICENSE-APACHE) license.
+The included Forge Standard Library is offered under either the [MIT](LICENSE-MIT) or the [Apache 2.0](LICENSE-APACHE) license.
 
 ## Features
 
