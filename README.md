@@ -193,7 +193,7 @@ contract Storage {
 
 ### stdCheats
 
-This is a wrapper over miscellaneous cheatcodes that need wrappers to be more dev friendly. Currently there are only functions related to `prank`. In general, users may expect ETH to be put into an address on `prank`, but this is not the case for safety reasons. Explicitly this `hoax` function should only be used for addresses that have expected balances as it will get overwritten. If an address already has ETH, you should just use `prank`. If you want to change that balance explicitly, just use `deal`. If you want to do both, `hoax` is also right for you.
+This is a wrapper over miscellaneous cheatcodes that need wrappers to be more dev friendly. Currently there are only functions related to `prank`. Specifically, `hoax` should be used for addresses where you expect a balance to be set or overwritten. If an address already has ETH, use `prank`. To explicitly change an address's balance, use `deal`. If you need to set a balance and then prank, `hoax` is the appropriate choice.
 
 #### Example usage:
 
