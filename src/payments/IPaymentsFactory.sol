@@ -22,6 +22,7 @@ interface IPaymentsFactoryFunctions {
      */
     function determineAddress(address proxyOwner, address paymentsOwner, address paymentsSigner)
         external
+        view
         returns (address proxyAddr);
 }
 
