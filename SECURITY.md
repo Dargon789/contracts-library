@@ -14,8 +14,8 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+To report a vulnerability, please contact us at [security@ithaca.xyz](mailto:security@ithaca.xyz).
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+We aim to acknowledge reports within 48 hours.
+You will be kept informed of the progress towards a fix and full announcement.
+We appreciate your responsible disclosure.

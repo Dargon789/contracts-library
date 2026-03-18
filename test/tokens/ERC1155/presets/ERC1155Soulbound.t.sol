@@ -1,25 +1,24 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { TestHelper } from "../../../TestHelper.sol";
+import {TestHelper} from "../../../TestHelper.sol";
 
-import { IERC1155ItemsFunctions, IERC1155ItemsSignals } from "src/tokens/ERC1155/presets/items/IERC1155Items.sol";
-import { ERC1155Soulbound } from "src/tokens/ERC1155/presets/soulbound/ERC1155Soulbound.sol";
-import { ERC1155SoulboundFactory } from "src/tokens/ERC1155/presets/soulbound/ERC1155SoulboundFactory.sol";
+import {ERC1155Soulbound} from "src/tokens/ERC1155/presets/soulbound/ERC1155Soulbound.sol";
+import {IERC1155ItemsSignals, IERC1155ItemsFunctions} from "src/tokens/ERC1155/presets/items/IERC1155Items.sol";
 import {
-    IERC1155Soulbound,
+    IERC1155SoulboundSignals,
     IERC1155SoulboundFunctions,
-    IERC1155SoulboundSignals
+    IERC1155Soulbound
 } from "src/tokens/ERC1155/presets/soulbound/IERC1155Soulbound.sol";
+import {ERC1155SoulboundFactory} from "src/tokens/ERC1155/presets/soulbound/ERC1155SoulboundFactory.sol";
 
-import { ISignalsImplicitMode } from "signals-implicit-mode/src/helper/SignalsImplicitMode.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
-import { IERC1155 } from "openzeppelin-contracts/contracts/token/ERC1155/IERC1155.sol";
-import { Strings } from "openzeppelin-contracts/contracts/utils/Strings.sol";
-import { IERC165 } from "openzeppelin-contracts/contracts/utils/introspection/IERC165.sol";
+// Interfaces
+import {IERC165} from "@0xsequence/erc-1155/contracts/interfaces/IERC165.sol";
+import {IERC1155} from "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155SoulboundSignals {
-
     // Redeclare events
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
 
@@ -37,15 +36,13 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
 
         ERC1155SoulboundFactory factory = new ERC1155SoulboundFactory(address(this));
         token = ERC1155Soulbound(
-            factory.deploy(
-                proxyOwner, owner, "name", "baseURI", "contractURI", address(this), 0, address(0), bytes32(0)
-            )
+            factory.deploy(proxyOwner, owner, "name", "baseURI", "contractURI", address(this), 0)
         );
     }
 
     function testReinitializeFails() public {
         vm.expectRevert(InvalidInitialization.selector);
-        token.initialize(owner, "name", "baseURI", "contractURI", address(this), 0, address(0), bytes32(0));
+        token.initialize(owner, "name", "baseURI", "contractURI", address(this), 0);
     }
 
     function testSupportsInterface() public view {
@@ -53,17 +50,15 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
         assertTrue(token.supportsInterface(type(IERC1155).interfaceId));
         assertTrue(token.supportsInterface(type(IERC1155ItemsFunctions).interfaceId));
         assertTrue(token.supportsInterface(type(IERC1155SoulboundFunctions).interfaceId));
-        assertTrue(token.supportsInterface(type(ISignalsImplicitMode).interfaceId));
     }
 
     /**
      * Test all public selectors for collisions against the proxy admin functions.
-     * @dev pnpm ts-node scripts/outputSelectors.ts
+     * @dev yarn ts-node scripts/outputSelectors.ts
      */
     function testSelectorCollision() public pure {
         checkSelectorCollision(0xa217fddf); // DEFAULT_ADMIN_ROLE()
         checkSelectorCollision(0x68a37ae8); // TRANSFER_ADMIN_ROLE()
-        checkSelectorCollision(0x9d043a66); // acceptImplicitRequest(address,(address,bytes4,bytes32,bytes32,bytes,(string,uint64)),(address,uint256,bytes,uint256,bool,bool,uint256))
         checkSelectorCollision(0x00fdd58e); // balanceOf(address,uint256)
         checkSelectorCollision(0x4e1273f4); // balanceOfBatch(address[],uint256[])
         checkSelectorCollision(0x6c0360eb); // baseURI()
@@ -77,7 +72,7 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
         checkSelectorCollision(0x842f9b68); // getTransferLocked()
         checkSelectorCollision(0x2f2ff15d); // grantRole(bytes32,address)
         checkSelectorCollision(0x91d14854); // hasRole(bytes32,address)
-        checkSelectorCollision(0x8ff83ac1); // initialize(address,string,string,string,address,uint96,address,bytes32)
+        checkSelectorCollision(0xf8954818); // initialize(address,string,string,string,address,uint96)
         checkSelectorCollision(0xe985e9c5); // isApprovedForAll(address,address)
         checkSelectorCollision(0x731133e9); // mint(address,uint256,uint256,bytes)
         checkSelectorCollision(0x06fdde03); // name()
@@ -91,8 +86,6 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
         checkSelectorCollision(0x0b5ee006); // setContractName(string)
         checkSelectorCollision(0x938e3d7b); // setContractURI(string)
         checkSelectorCollision(0x04634d8d); // setDefaultRoyalty(address,uint96)
-        checkSelectorCollision(0xed4c2ac7); // setImplicitModeProjectId(bytes32)
-        checkSelectorCollision(0x0bb310de); // setImplicitModeValidator(address)
         checkSelectorCollision(0x5944c753); // setTokenRoyalty(uint256,address,uint96)
         checkSelectorCollision(0x35e60bd4); // setTransferLocked(bool)
         checkSelectorCollision(0x01ffc9a7); // supportsInterface(bytes4)
@@ -107,19 +100,17 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
         assertTrue(token.hasRole(keccak256("METADATA_ADMIN_ROLE"), owner));
         assertTrue(token.hasRole(keccak256("MINTER_ROLE"), owner));
         assertTrue(token.hasRole(keccak256("ROYALTY_ADMIN_ROLE"), owner));
-        assertTrue(token.hasRole(keccak256("IMPLICIT_MODE_ADMIN_ROLE"), owner));
     }
 
     function testFactoryDetermineAddress(
         address _proxyOwner,
         address tokenOwner,
         string memory name,
+        string memory symbol,
         string memory baseURI,
         string memory contractURI,
         address royaltyReceiver,
-        uint96 royaltyFeeNumerator,
-        address implicitModeValidator,
-        bytes32 implicitModeProjectId
+        uint96 royaltyFeeNumerator
     ) public {
         vm.assume(_proxyOwner != address(0));
         vm.assume(tokenOwner != address(0));
@@ -127,26 +118,10 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
         royaltyFeeNumerator = uint96(bound(royaltyFeeNumerator, 0, 10_000));
         ERC1155SoulboundFactory factory = new ERC1155SoulboundFactory(address(this));
         address deployedAddr = factory.deploy(
-            _proxyOwner,
-            tokenOwner,
-            name,
-            baseURI,
-            contractURI,
-            royaltyReceiver,
-            royaltyFeeNumerator,
-            implicitModeValidator,
-            implicitModeProjectId
+            _proxyOwner, tokenOwner, name, baseURI, contractURI, royaltyReceiver, royaltyFeeNumerator
         );
         address predictedAddr = factory.determineAddress(
-            _proxyOwner,
-            tokenOwner,
-            name,
-            baseURI,
-            contractURI,
-            royaltyReceiver,
-            royaltyFeeNumerator,
-            implicitModeValidator,
-            implicitModeProjectId
+            _proxyOwner, tokenOwner, name, baseURI, contractURI, royaltyReceiver, royaltyFeeNumerator
         );
         assertEq(deployedAddr, predictedAddr);
     }
@@ -154,9 +129,7 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
     //
     // Transfers
     //
-    function testUnlockInvalidRole(
-        address invalid
-    ) public {
+    function testUnlockInvalidRole(address invalid) public {
         vm.assume(invalid != owner);
 
         vm.expectRevert();
@@ -190,8 +163,8 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
         vm.prank(holder);
         token.setApprovalForAll(operator, true);
 
-        vm.prank(operator);
         vm.expectRevert(TransfersLocked.selector);
+        vm.prank(operator);
         token.safeTransferFrom(holder, receiver, tokenId, 1, "");
     }
 
@@ -257,5 +230,4 @@ contract ERC1155SoulboundTest is TestHelper, IERC1155ItemsSignals, IERC1155Soulb
         vm.expectRevert(TransfersLocked.selector);
         token.batchBurn(tokenIds, amounts);
     }
-
 }
