@@ -46,7 +46,7 @@ contract Payments is Ownable, IPayments, IERC165 {
     }
 
     /// @inheritdoc IPaymentsFunctions
-    function makePayment(PaymentDetails calldata paymentDetails, bytes calldata signature) external payable {
+    function makePayment(PaymentDetails calldata paymentDetails, bytes calldata signature) external {
         // Check if payment is already accepted
         if (paymentAccepted[paymentDetails.purchaseId]) {
             revert PaymentAlreadyAccepted();
