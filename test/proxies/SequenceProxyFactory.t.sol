@@ -47,6 +47,7 @@ contract PublicSequenceProxyFactory is SequenceProxyFactory {
 }
 
 contract SequenceProxyFactoryTest is Test {
+
     PublicSequenceProxyFactory private factory;
     address private proxyOwner;
     address private impl1;
@@ -126,4 +127,5 @@ contract SequenceProxyFactoryTest is Test {
         vm.expectRevert("Create2: Failed on deploy");
         factory.createProxy(bytes32(""), proxyOwner, bytes(""));
     }
+
 }

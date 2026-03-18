@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 
 interface IERC20ItemsFunctions {
+
     /**
      * Mint tokens.
      * @param to Address to mint tokens to.

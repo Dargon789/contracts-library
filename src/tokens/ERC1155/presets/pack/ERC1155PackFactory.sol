@@ -2,26 +2,25 @@
 pragma solidity ^0.8.19;
 
 import { SequenceProxyFactory } from "../../../../proxies/SequenceProxyFactory.sol";
-import { ERC1155Items } from "./ERC1155Items.sol";
-import { IERC1155ItemsFactory, IERC1155ItemsFactoryFunctions } from "./IERC1155ItemsFactory.sol";
+import { ERC1155Pack } from "./ERC1155Pack.sol";
+import { IERC1155PackFactory, IERC1155PackFactoryFunctions } from "./IERC1155PackFactory.sol";
 
 /**
- * Deployer of ERC-1155 Items proxies.
+ * Deployer of ERC-1155 Pack proxies.
  */
-contract ERC1155ItemsFactory is IERC1155ItemsFactory, SequenceProxyFactory {
+contract ERC1155PackFactory is IERC1155PackFactory, SequenceProxyFactory {
 
     /**
-     * Creates an ERC-1155 Items Factory.
-     * @param factoryOwner The owner of the ERC-1155 Items Factory
+     * Creates an ERC-1155 Pack Factory.
+     * @param factoryOwner The owner of the ERC-1155 Pack Factory
+     * @param holderFallback The address of the ERC1155Holder fallback
      */
-    constructor(
-        address factoryOwner
-    ) {
-        ERC1155Items impl = new ERC1155Items();
+    constructor(address factoryOwner, address holderFallback) {
+        ERC1155Pack impl = new ERC1155Pack(holderFallback);
         SequenceProxyFactory._initialize(address(impl), factoryOwner);
     }
 
-    /// @inheritdoc IERC1155ItemsFactoryFunctions
+    /// @inheritdoc IERC1155PackFactoryFunctions
     function deploy(
         address proxyOwner,
         address tokenOwner,
@@ -32,7 +31,7 @@ contract ERC1155ItemsFactory is IERC1155ItemsFactory, SequenceProxyFactory {
         uint96 royaltyFeeNumerator,
         address implicitModeValidator,
         bytes32 implicitModeProjectId
-    ) external returns (address proxyAddr) {
+    ) external override returns (address proxyAddr) {
         bytes32 salt = keccak256(
             abi.encode(
                 tokenOwner,
@@ -46,7 +45,7 @@ contract ERC1155ItemsFactory is IERC1155ItemsFactory, SequenceProxyFactory {
             )
         );
         proxyAddr = _createProxy(salt, proxyOwner, "");
-        ERC1155Items(proxyAddr).initialize(
+        ERC1155Pack(proxyAddr).initialize(
             tokenOwner,
             name,
             baseURI,
@@ -56,11 +55,11 @@ contract ERC1155ItemsFactory is IERC1155ItemsFactory, SequenceProxyFactory {
             implicitModeValidator,
             implicitModeProjectId
         );
-        emit ERC1155ItemsDeployed(proxyAddr);
+        emit ERC1155PackDeployed(proxyAddr);
         return proxyAddr;
     }
 
-    /// @inheritdoc IERC1155ItemsFactoryFunctions
+    /// @inheritdoc IERC1155PackFactoryFunctions
     function determineAddress(
         address proxyOwner,
         address tokenOwner,
@@ -71,7 +70,7 @@ contract ERC1155ItemsFactory is IERC1155ItemsFactory, SequenceProxyFactory {
         uint96 royaltyFeeNumerator,
         address implicitModeValidator,
         bytes32 implicitModeProjectId
-    ) external view returns (address proxyAddr) {
+    ) external view override returns (address proxyAddr) {
         bytes32 salt = keccak256(
             abi.encode(
                 tokenOwner,

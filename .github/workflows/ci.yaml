@@ -1,8 +1,6 @@
 on: [push]
 
 name: ci
-permissions:
-  contents: read
 
 jobs:
   install:
@@ -89,7 +87,7 @@ jobs:
           version: nightly
 
       - name: Run tests
-        run: FOUNDRY_FUZZ_RUNS=1024 forge test --rerun -vvvvv
+        run: FOUNDRY_FUZZ_RUNS=1024 forge test -vvv
 
   # coverage:
   #   name: Coverage
@@ -118,4 +116,3 @@ jobs:
   #       uses: coverallsapp/github-action@master
   #       with:
   #         github-token: ${{ secrets.GITHUB_TOKEN }}
-
