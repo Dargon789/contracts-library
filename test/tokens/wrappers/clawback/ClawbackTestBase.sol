@@ -1,22 +1,21 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { ERC1155Mock } from "../../../_mocks/ERC1155Mock.sol";
-import { ERC20Mock } from "../../../_mocks/ERC20Mock.sol";
-import { ERC721Mock } from "../../../_mocks/ERC721Mock.sol";
-import { IGenericToken } from "../../../_mocks/IGenericToken.sol";
+import {Test, console, stdError} from "forge-std/Test.sol";
+import {IERC721TokenReceiver} from "forge-std/interfaces/IERC721.sol";
 
-import { Test, console, stdError } from "forge-std/Test.sol";
+import {Clawback} from "src/tokens/wrappers/clawback/Clawback.sol";
+import {ClawbackMetadata} from "src/tokens/wrappers/clawback/ClawbackMetadata.sol";
+import {IClawbackFunctions} from "src/tokens/wrappers/clawback/IClawback.sol";
 
-import { IERC721Receiver } from "openzeppelin-contracts/contracts/interfaces/IERC721Receiver.sol";
-import { IERC1155Receiver } from "openzeppelin-contracts/contracts/token/ERC1155/IERC1155Receiver.sol";
+import {ERC1155Mock} from "test/_mocks/ERC1155Mock.sol";
+import {ERC20Mock} from "test/_mocks/ERC20Mock.sol";
+import {ERC721Mock} from "test/_mocks/ERC721Mock.sol";
+import {IGenericToken} from "test/_mocks/IGenericToken.sol";
 
-import { Clawback } from "src/tokens/wrappers/clawback/Clawback.sol";
-import { ClawbackMetadata } from "src/tokens/wrappers/clawback/ClawbackMetadata.sol";
-import { IClawbackFunctions } from "src/tokens/wrappers/clawback/IClawback.sol";
+import {IERC1155TokenReceiver} from "@0xsequence/erc-1155/contracts/interfaces/IERC1155TokenReceiver.sol";
 
-contract ClawbackTestBase is Test, IERC1155Receiver, IERC721Receiver {
-
+contract ClawbackTestBase is Test, IERC1155TokenReceiver, IERC721TokenReceiver {
     Clawback public clawback;
     ClawbackMetadata public clawbackMetadata;
     ERC20Mock public erc20;
@@ -25,15 +24,13 @@ contract ClawbackTestBase is Test, IERC1155Receiver, IERC721Receiver {
 
     function setUp() public {
         clawbackMetadata = new ClawbackMetadata();
-        clawback = new Clawback(address(this), address(clawbackMetadata), address(0), bytes32(0));
+        clawback = new Clawback(address(this), address(clawbackMetadata));
         erc20 = new ERC20Mock(address(this));
         erc721 = new ERC721Mock(address(this), "baseURI");
         erc1155 = new ERC1155Mock(address(this), "baseURI");
     }
 
-    function _toTokenType(
-        uint8 tokenType
-    ) internal pure returns (IClawbackFunctions.TokenType) {
+    function _toTokenType(uint8 tokenType) internal pure returns (IClawbackFunctions.TokenType) {
         tokenType = tokenType % 3;
         if (tokenType == 0) {
             return IClawbackFunctions.TokenType.ERC20;
@@ -44,11 +41,11 @@ contract ClawbackTestBase is Test, IERC1155Receiver, IERC721Receiver {
         return IClawbackFunctions.TokenType.ERC1155;
     }
 
-    function _validParams(
-        IClawbackFunctions.TokenType tokenType,
-        uint256 tokenId,
-        uint256 amount
-    ) internal view returns (address, uint256, uint256) {
+    function _validParams(IClawbackFunctions.TokenType tokenType, uint256 tokenId, uint256 amount)
+        internal
+        view
+        returns (address, uint256, uint256)
+    {
         if (tokenType == IClawbackFunctions.TokenType.ERC20) {
             return (address(erc20), 0, bound(amount, 1, type(uint256).max));
         }
@@ -77,7 +74,7 @@ contract ClawbackTestBase is Test, IERC1155Receiver, IERC721Receiver {
     ) internal returns (WrapSetupResult memory result) {
         vm.assume(templateAdmin != address(0));
 
-        // Unwrap timestamp is uint64 as per ERC721 implementation used by ERC721Mock
+        // Unwrap timestamp is uint64 as per ERC721A implmentation used by ERC721Mock
         result.duration = uint56(bound(duration, 1, type(uint64).max - block.timestamp));
 
         vm.prank(templateAdmin);
@@ -106,32 +103,21 @@ contract ClawbackTestBase is Test, IERC1155Receiver, IERC721Receiver {
         return this.onERC1155Received.selector;
     }
 
-    function onERC1155BatchReceived(
-        address,
-        address,
-        uint256[] calldata,
-        uint256[] calldata,
-        bytes calldata
-    ) external pure returns (bytes4) {
+    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata)
+        external
+        pure
+        returns (bytes4)
+    {
         return this.onERC1155BatchReceived.selector;
     }
 
     // Helper
 
-    modifier safeAddress(
-        address addr
-    ) {
+    modifier safeAddress(address addr) {
         vm.assume(addr != address(0));
         vm.assume(addr.code.length <= 2);
         assumeNotPrecompile(addr);
         assumeNotForgeAddress(addr);
         _;
     }
-
-    function supportsInterface(
-        bytes4 interfaceId
-    ) external pure returns (bool) {
-        return interfaceId == type(IERC1155Receiver).interfaceId || interfaceId == type(IERC721Receiver).interfaceId;
-    }
-
 }

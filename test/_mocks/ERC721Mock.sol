@@ -1,22 +1,25 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { IGenericToken } from "./IGenericToken.sol";
-
-import { ERC721BaseToken } from "src/tokens/ERC721/ERC721BaseToken.sol";
+import {IGenericToken} from "./IGenericToken.sol";
+import {ERC721BaseToken} from "src/tokens/ERC721/ERC721BaseToken.sol";
 
 contract ERC721Mock is ERC721BaseToken, IGenericToken {
-
     constructor(address owner, string memory tokenBaseURI) {
-        _initialize(owner, "", "", tokenBaseURI, "", address(0), bytes32(0));
+        _initialize(owner, "", "", tokenBaseURI, "");
+    }
+
+    function _sequentialUpTo() internal pure override returns (uint256) {
+        // Force non sequential minting
+        return 0;
     }
 
     function mint(address to, uint256 tokenId, uint256) external override {
-        _mint(to, tokenId);
+        _mintSpot(to, tokenId);
     }
 
-    function approve(address owner, address operator, uint256 tokenId, uint256) external override {
-        _approve(owner, operator, tokenId);
+    function approve(address, address operator, uint256 tokenId, uint256) external override {
+        _approve(operator, tokenId, false);
     }
 
     function balanceOf(address owner, uint256 tokenId) external view override returns (uint256) {
@@ -26,5 +29,4 @@ contract ERC721Mock is ERC721BaseToken, IGenericToken {
             return 0;
         }
     }
-
 }

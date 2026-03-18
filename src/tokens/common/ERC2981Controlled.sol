@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { IERC2981Controlled } from "./IERC2981Controlled.sol";
-
-import { AccessControlEnumerable } from "openzeppelin-contracts/contracts/access/AccessControlEnumerable.sol";
-import { ERC2981 } from "openzeppelin-contracts/contracts/token/common/ERC2981.sol";
+import {IERC2981Controlled} from "@0xsequence/contracts-library/tokens/common/IERC2981Controlled.sol";
+import {ERC2981} from "@openzeppelin/contracts/token/common/ERC2981.sol";
+import {AccessControlEnumerable} from "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 
 /**
  * An implementation of ERC-2981 that allows updates by roles.
  */
 abstract contract ERC2981Controlled is ERC2981, AccessControlEnumerable, IERC2981Controlled {
-
     bytes32 internal constant ROYALTY_ADMIN_ROLE = keccak256("ROYALTY_ADMIN_ROLE");
 
     //
@@ -33,11 +31,10 @@ abstract contract ERC2981Controlled is ERC2981, AccessControlEnumerable, IERC298
      * @param feeNumerator The royalty fee numerator in basis points (e.g. 15% would be 1500)
      * @notice This overrides the default royalty information for this token id
      */
-    function setTokenRoyalty(
-        uint256 tokenId,
-        address receiver,
-        uint96 feeNumerator
-    ) external onlyRole(ROYALTY_ADMIN_ROLE) {
+    function setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)
+        external
+        onlyRole(ROYALTY_ADMIN_ROLE)
+    {
         _setTokenRoyalty(tokenId, receiver, feeNumerator);
     }
 
@@ -50,11 +47,14 @@ abstract contract ERC2981Controlled is ERC2981, AccessControlEnumerable, IERC298
      * @param interfaceId Interface id
      * @return True if supported
      */
-    function supportsInterface(
-        bytes4 interfaceId
-    ) public view virtual override(ERC2981, AccessControlEnumerable) returns (bool) {
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC2981, AccessControlEnumerable)
+        returns (bool)
+    {
         return ERC2981.supportsInterface(interfaceId) || AccessControlEnumerable.supportsInterface(interfaceId)
             || type(IERC2981Controlled).interfaceId == interfaceId || super.supportsInterface(interfaceId);
     }
-
 }

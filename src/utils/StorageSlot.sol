@@ -10,7 +10,6 @@ pragma solidity ^0.8.19;
  * The functions in this library return Slot structs that contain a `value` member that can be used to read or write.
  */
 library StorageSlot {
-
     struct AddressSlot {
         address value;
     }
@@ -30,9 +29,7 @@ library StorageSlot {
     /**
      * @dev Returns an `AddressSlot` with member `value` located at `slot`.
      */
-    function _getAddressSlot(
-        bytes32 _slot
-    ) internal pure returns (AddressSlot storage r) {
+    function _getAddressSlot(bytes32 _slot) internal pure returns (AddressSlot storage r) {
         assembly {
             // solhint-disable-line no-inline-assembly
             r.slot := _slot
@@ -42,9 +39,7 @@ library StorageSlot {
     /**
      * @dev Returns an `BooleanSlot` with member `value` located at `slot`.
      */
-    function _getBooleanSlot(
-        bytes32 _slot
-    ) internal pure returns (BooleanSlot storage r) {
+    function _getBooleanSlot(bytes32 _slot) internal pure returns (BooleanSlot storage r) {
         assembly {
             // solhint-disable-line no-inline-assembly
             r.slot := _slot
@@ -54,9 +49,7 @@ library StorageSlot {
     /**
      * @dev Returns an `Bytes32Slot` with member `value` located at `slot`.
      */
-    function _getBytes32Slot(
-        bytes32 _slot
-    ) internal pure returns (Bytes32Slot storage r) {
+    function _getBytes32Slot(bytes32 _slot) internal pure returns (Bytes32Slot storage r) {
         assembly {
             // solhint-disable-line no-inline-assembly
             r.slot := _slot
@@ -66,13 +59,10 @@ library StorageSlot {
     /**
      * @dev Returns an `Uint256Slot` with member `value` located at `slot`.
      */
-    function _getUint256Slot(
-        bytes32 _slot
-    ) internal pure returns (Uint256Slot storage r) {
+    function _getUint256Slot(bytes32 _slot) internal pure returns (Uint256Slot storage r) {
         assembly {
             // solhint-disable-line no-inline-assembly
             r.slot := _slot
         }
     }
-
 }

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "module": "esnext",
     "lib": ["esnext"],
-    "importHelpers": false,
+    "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
     "rootDir": "./",
@@ -21,8 +21,7 @@
   },
   "ts-node": {
     "compilerOptions": {
-      "module": "CommonJS",
-      "importHelpers": false
+      "module": "CommonJS"
     }
   }
 }
