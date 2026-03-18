@@ -5,7 +5,7 @@ interface IERC1155SaleFactoryFunctions {
 
     /**
      * Creates an ERC-1155 Sale proxy contract
-     * @param nonce Extra salt to add to the salt used to compute the address
+     * @param nonce Nonce for randomizing the deployment address.
      * @param proxyOwner The owner of the ERC-1155 Sale proxy
      * @param tokenOwner The owner of the ERC-1155 Sale implementation
      * @param items The ERC-1155 Items contract address
@@ -25,7 +25,7 @@ interface IERC1155SaleFactoryFunctions {
 
     /**
      * Computes the address of a proxy instance.
-     * @param nonce Extra salt to add to the salt used to compute the address
+     * @param nonce Nonce for randomizing the deployment address.
      * @param proxyOwner The owner of the ERC-1155 Sale proxy
      * @param tokenOwner The owner of the ERC-1155 Sale implementation
      * @param items The ERC-1155 Items contract address

@@ -2,12 +2,11 @@
 pragma solidity ^0.8.19;
 
 import {
-    IERC20Upgradeable,
-    PaymentSplitterUpgradeable
-} from "lib/openzeppelin-contracts-upgradeable/contracts/finance/PaymentSplitterUpgradeable.sol";
+    PaymentSplitterUpgradeable,
+    IERC20Upgradeable
+} from "@openzeppelin-upgradeable/contracts/finance/PaymentSplitterUpgradeable.sol";
 
 contract PaymentSplitter is PaymentSplitterUpgradeable {
-
     /**
      * Initialize the PaymentSplitter contract.
      * @param payees The addresses of the payees
@@ -17,5 +16,4 @@ contract PaymentSplitter is PaymentSplitterUpgradeable {
     function initialize(address[] memory payees, uint256[] memory shares) public initializer {
         __PaymentSplitter_init(payees, shares);
     }
-
 }
