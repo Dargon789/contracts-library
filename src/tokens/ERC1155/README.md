@@ -22,7 +22,7 @@ The `ERC1155Items` contract is a preset that configures the `ERC1155BaseToken` c
 
 The `ERC1155Sale` contract is a preset that configures the `ERC1155BaseToken` contract to allow for the sale of tokens. It adds a `mint(address to, , uint256[] memory tokenIds, uint256[] memory amounts, bytes memory data, bytes32[] calldata proof)` function allows for the minting of tokens under various conditions.
 
-Conditions may be set by the contract owner. Set the payment token with `setPaymentToken(address paymentTokenAddr)`, then use either the `setTokenSaleDetails(uint256 tokenId, uint256 cost, uint256 supplyCap, uint64 startTime, uint64 endTime, bytes32 merkleRoot)` function for single token settings or the `setGlobalSaleDetails(uint256 cost, uint256 supplyCap, uint64 startTime, uint64 endTime, bytes32 merkleRoot)` function for global settings. These functions can only be called by accounts with the `MINT_ADMIN_ROLE`.
+Conditions may be set by the contract owner. Set the payment token with `setPaymentToken(address paymentTokenAddr)`, then use either the `setTokenSaleDetails(uint256 tokenId, uint256 cost, uint256 remainingSupply, uint64 startTime, uint64 endTime, bytes32 merkleRoot)` function for single token settings or the `setGlobalSaleDetails(uint256 cost, uint256 remainingSupply, uint64 startTime, uint64 endTime, bytes32 merkleRoot)` function for global settings. These functions can only be called by accounts with the `MINT_ADMIN_ROLE`.
 
 When using a merkle proof, each caller may only use each root once. To prevent collisions ensure the same root is not used for multiple sale details.
 Leaves are defined as `keccak256(abi.encodePacked(caller, tokenId))`. The `caller` is the message sender, who will also receive the tokens. The `tokenId` is the id of the token that will be minted, (for global sales `type(uint256).max` is used).
@@ -47,10 +47,11 @@ The contracts use the `AccessControlEnumberable` contract from OpenZeppelin to p
 Role keys are defined as the `keccak256` value of the role name.
 The following roles are defined:
 
-| Role                  | Description                        | Key                                                                  |
-| --------------------- | ---------------------------------- | -------------------------------------------------------------------- |
-| `DEFAULT_ADMIN_ROLE`  | Can updates roles.                 | `0x0`                                                                |
-| `METADATA_ADMIN_ROLE` | Can update metadata.               | `0xe02a0315b383857ac496e9d2b2546a699afaeb4e5e83a1fdef64376d0b74e5a5` |
-| `MINTER_ROLE`         | Can mint tokens.                   | `0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6` |
-| `MINT_ADMIN_ROLE`     | Can set minting logic.             | `0x4c02318d8c3aadc98ccf18aebbf3126f651e0c3f6a1de5ff8edcf6724a2ad5c2` |
-| `WITHDRAW_ROLE`       | Withdraw tokens from the contract. | `0x5d8e12c39142ff96d79d04d15d1ba1269e4fe57bb9d26f43523628b34ba108ec` |
+| Role                       | Description                                   | Key                                                                  |
+| -------------------------- | --------------------------------------------- | -------------------------------------------------------------------- |
+| `DEFAULT_ADMIN_ROLE`       | Can updates roles.                            | `0x0`                                                                |
+| `METADATA_ADMIN_ROLE`      | Can update metadata.                          | `0xe02a0315b383857ac496e9d2b2546a699afaeb4e5e83a1fdef64376d0b74e5a5` |
+| `MINTER_ROLE`              | Can mint tokens.                              | `0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6` |
+| `MINT_ADMIN_ROLE`          | Can set minting logic.                        | `0x4c02318d8c3aadc98ccf18aebbf3126f651e0c3f6a1de5ff8edcf6724a2ad5c2` |
+| `WITHDRAW_ROLE`            | Withdraw tokens from the contract.            | `0x5d8e12c39142ff96d79d04d15d1ba1269e4fe57bb9d26f43523628b34ba108ec` |
+| `IMPLICIT_MODE_ADMIN_ROLE` | Update settings for implicit mode validation. | `0x70649ec320b507febad3e8ef750e5f580b9ae32f9f50d4c7b121332c81971530` |
