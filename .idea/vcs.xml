@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/0xsequence/erc-1155" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/0xsequence/erc20-meta-token" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/chiru-labs/erc721a" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/chiru-labs/erc721a-upgradeable" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/erc2470-libs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/erc2470-libs/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/murky" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/murky/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/murky/lib/forge-std/lib/ds-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/murky/lib/openzeppelin-contracts" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/murky/lib/openzeppelin-contracts/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/murky/lib/openzeppelin-contracts/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-upgradeable" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-upgradeable/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-upgradeable/lib/forge-std/lib/ds-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin/lib/forge-std/lib/ds-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/erc2470-libs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/erc2470-libs/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3/lib/erc2470-libs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3/lib/erc2470-libs/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3/lib/openzeppelin-contracts" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3/lib/openzeppelin-contracts/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3/lib/openzeppelin-contracts/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/signals-implicit-mode/lib/sequence-v3/lib/openzeppelin-contracts/lib/halmos-cheatcodes" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/solady" vcs="Git" />
+  </component>
+</project>
