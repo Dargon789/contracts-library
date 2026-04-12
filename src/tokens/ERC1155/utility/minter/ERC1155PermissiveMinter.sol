@@ -1,18 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { SignalsImplicitModeControlled } from "../../../common/SignalsImplicitModeControlled.sol";
-import { IERC1155ItemsFunctions } from "../../presets/items/IERC1155Items.sol";
+import {IERC1155ItemsFunctions} from "@0xsequence/contracts-library/tokens/ERC1155/presets/items/IERC1155Items.sol";
 
 /**
  * An ERC-1155 contract that allows permissive minting.
  */
-contract ERC1155PermissiveMinter is SignalsImplicitModeControlled {
-
-    constructor(address owner, address implicitModeValidator, bytes32 implicitModeProjectId) {
-        _initializeImplicitMode(owner, implicitModeValidator, implicitModeProjectId);
-    }
-
+contract ERC1155PermissiveMinter {
     /**
      * Mint tokens.
      * @param items The items contract.
@@ -42,5 +36,4 @@ contract ERC1155PermissiveMinter is SignalsImplicitModeControlled {
     ) external {
         IERC1155ItemsFunctions(items).batchMint(to, tokenIds, amounts, data);
     }
-
 }
