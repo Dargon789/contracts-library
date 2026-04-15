@@ -13,9 +13,6 @@ pnpm-error.log
 
 # Env vars
 .env
-<<<<<<< Updated upstream
 .env.example
 *.toml
 *.lock
-=======
->>>>>>> Stashed changes
