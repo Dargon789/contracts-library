@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 ClawbackMetadataTest:testDurationAndUnlocksAt() (gas: 500605)
-
 ClawbackMetadataTest:testMetadataPropertiesERC1155((uint8,uint32,uint56,uint256),(bool,bool,uint56,address)) (runs: 1024, μ: 157084, ~: 145004)
 ClawbackMetadataTest:testMetadataPropertiesERC20((uint8,uint32,uint56,uint256),(bool,bool,uint56,address)) (runs: 1024, μ: 160141, ~: 160126)
 ClawbackMetadataTest:testMetadataPropertiesERC721((uint8,uint32,uint56,uint256),(bool,bool,uint56,address)) (runs: 1024, μ: 258193, ~: 254340)
@@ -179,7 +177,8 @@ SequenceProxyFactoryTest:testDuplicateDeploysFail() (gas: 1040461625)
 SequenceProxyFactoryTest:testProxyOwnerUpgrade() (gas: 1048467)
 SequenceProxyFactoryTest:testProxyOwnerUpgradeUnaffectedByBeaconUpgrades() (gas: 1063273)
 SequenceProxyFactoryTest:testUpgradeAfterDeploy() (gas: 1036252)
-=======
+
+
 ClawbackMetadataTest:testDurationAndUnlocksAt() (gas: 900624)
 ClawbackMetadataTest:testMetadataPropertiesERC1155((uint8,uint32,uint56,uint256),(bool,bool,uint56,address)) (runs: 1044, μ: 242392, ~: 238164)
 ClawbackMetadataTest:testMetadataPropertiesERC20((uint8,uint32,uint56,uint256),(bool,bool,uint56,address)) (runs: 1044, μ: 292816, ~: 293810)
@@ -449,4 +448,3 @@ SignalsImplicitModeTest:testAcceptImplicitRequestWithFallbackOnly() (gas: 195768
 SignalsImplicitModeTest:testAcceptImplicitRequestWithTransactionCall() (gas: 195689)
 SignalsImplicitModeTest:testInitialize() (gas: 164484)
 SignalsImplicitModeTest:testSupportsInterface() (gas: 15574)
->>>>>>> Stashed changes
