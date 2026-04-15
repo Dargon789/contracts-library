@@ -363,15 +363,16 @@ function parseCommitLogs(logs: string): CommitEvent[] {
       }
       const user = '0x' + userTopic.slice(-40).toLowerCase()
 
-      // topic2 is the indexed packId (padded to 32 bytes)
-      // Note: packId might be 0 and topic2 might be missing
-      const packIdTopic = log.topics[2] || '0x0'
+      // packId is not indexed, so it's in the data field
       let packId = '0'
       try {
-        packId = BigInt(packIdTopic).toString()
+        const data = log.data || '0x'
+        if (data !== '0x') {
+          packId = BigInt(data).toString()
+        }
       } catch (error) {
         console.error(
-          `⚠️  Warning: Invalid packId topic "${packIdTopic}", using 0`,
+          `⚠️  Warning: Failed to parse packId from data "${log.data}", using 0`,
         )
         packId = '0'
       }
