@@ -1,29 +1,24 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { ClawbackTestBase, IGenericToken } from "./ClawbackTestBase.sol";
+import {ClawbackTestBase, IGenericToken} from "./ClawbackTestBase.sol";
+import {console, stdError} from "forge-std/Test.sol";
 
-import { Clawback } from "src/tokens/wrappers/clawback/Clawback.sol";
-import { IClawback, IClawbackFunctions, IClawbackSignals } from "src/tokens/wrappers/clawback/IClawback.sol";
+import {Clawback} from "src/tokens/wrappers/clawback/Clawback.sol";
+import {IClawback, IClawbackFunctions, IClawbackSignals} from "src/tokens/wrappers/clawback/IClawback.sol";
 
-import { IERC1155 } from "openzeppelin-contracts/contracts/token/ERC1155/IERC1155.sol";
-import { IERC165 } from "openzeppelin-contracts/contracts/utils/introspection/IERC165.sol";
-
-import { ISignalsImplicitMode } from "signals-implicit-mode/src/helper/SignalsImplicitMode.sol";
-
-import { ERC1155 } from "solady/tokens/ERC1155.sol";
+import {IERC1155} from "@0xsequence/erc-1155/contracts/interfaces/IERC1155.sol";
+import {IERC1155Metadata} from "@0xsequence/erc-1155/contracts/interfaces/IERC1155Metadata.sol";
+import {IERC165} from "@0xsequence/erc-1155/contracts/interfaces/IERC165.sol";
 
 contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
-
     //
     // Template
     //
-    function testAddTemplate(
-        address admin,
-        uint56 duration,
-        bool destructionOnly,
-        bool transferOpen
-    ) public returns (uint32 templateId) {
+    function testAddTemplate(address admin, uint56 duration, bool destructionOnly, bool transferOpen)
+        public
+        returns (uint32 templateId)
+    {
         vm.assume(admin != address(0));
 
         vm.expectEmit(true, true, true, true, address(clawback));
@@ -237,13 +232,10 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
     //
     // Wrap
     //
-    function testWrap(
-        address templateAdmin,
-        uint8 tokenTypeNum,
-        uint256 tokenId,
-        uint256 amount,
-        address receiver
-    ) public safeAddress(receiver) {
+    function testWrap(address templateAdmin, uint8 tokenTypeNum, uint256 tokenId, uint256 amount, address receiver)
+        public
+        safeAddress(receiver)
+    {
         IClawbackFunctions.TokenType tokenType = _toTokenType(tokenTypeNum);
         address tokenAddr;
         (tokenAddr, tokenId, amount) = _validParams(tokenType, tokenId, amount);
@@ -271,12 +263,9 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
     }
 
     // Note forge coverage misreports this as not covered
-    function testWrapInvalidTokenType(
-        address templateAdmin,
-        uint8 tokenTypeNum,
-        uint256 tokenId,
-        uint256 amount
-    ) public {
+    function testWrapInvalidTokenType(address templateAdmin, uint8 tokenTypeNum, uint256 tokenId, uint256 amount)
+        public
+    {
         vm.assume(tokenTypeNum > 3);
 
         IClawbackFunctions.TokenType tokenType = _toTokenType(tokenTypeNum);
@@ -487,7 +476,7 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
         vm.assume(wrongWrappedTokenId != result.wrappedTokenId);
 
         vm.warp(block.timestamp + duration);
-        vm.expectRevert(ERC1155.InsufficientBalance.selector);
+        vm.expectRevert(stdError.arithmeticError);
         clawback.unwrap(wrongWrappedTokenId, address(this), amount);
     }
 
@@ -527,7 +516,7 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
         invalidAmount = bound(invalidAmount, amount + 1, type(uint256).max);
 
         vm.warp(block.timestamp + duration);
-        vm.expectRevert(ERC1155.InsufficientBalance.selector);
+        vm.expectRevert(stdError.arithmeticError);
         clawback.unwrap(result.wrappedTokenId, address(this), invalidAmount);
     }
 
@@ -1114,11 +1103,11 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
             tokenIds[0] = result.wrappedTokenId;
             uint256[] memory amounts = new uint256[](1);
             amounts[0] = amount;
-            vm.expectRevert(ERC1155.NotOwnerNorApproved.selector);
+            vm.expectRevert("ERC1155#safeBatchTransferFrom: INVALID_OPERATOR");
             vm.prank(transferer);
             clawback.safeBatchTransferFrom(address(this), receiver, tokenIds, amounts, "");
         } else {
-            vm.expectRevert(ERC1155.NotOwnerNorApproved.selector);
+            vm.expectRevert("ERC1155#safeTransferFrom: INVALID_OPERATOR");
             vm.prank(transferer);
             clawback.safeTransferFrom(address(this), receiver, result.wrappedTokenId, amount, "");
         }
@@ -1157,9 +1146,7 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
     //
     // Receiver prevention
     //
-    function testPreventsOnERC721Received(
-        uint256 tokenId
-    ) public {
+    function testPreventsOnERC721Received(uint256 tokenId) public {
         (, tokenId,) = _validParams(IClawbackFunctions.TokenType.ERC721, tokenId, 1);
         erc721.mint(address(this), tokenId, 1);
 
@@ -1175,12 +1162,9 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
         erc1155.safeTransferFrom(address(this), address(clawback), tokenId, amount, "");
     }
 
-    function testPreventsOnERC1155Received(
-        uint256 tokenId1,
-        uint256 amount1,
-        uint256 tokenId2,
-        uint256 amount2
-    ) public {
+    function testPreventsOnERC1155Received(uint256 tokenId1, uint256 amount1, uint256 tokenId2, uint256 amount2)
+        public
+    {
         (, tokenId1, amount1) = _validParams(IClawbackFunctions.TokenType.ERC1155, tokenId1, amount1);
         (, tokenId2, amount2) = _validParams(IClawbackFunctions.TokenType.ERC1155, tokenId2, amount2);
         vm.assume(tokenId1 != tokenId2);
@@ -1202,10 +1186,10 @@ contract ClawbackTest is ClawbackTestBase, IClawbackSignals {
     // Supports Interface
     //
     function testSupportsInterface() public view {
-        assertTrue(clawback.supportsInterface(type(IERC165).interfaceId));
-        assertTrue(clawback.supportsInterface(type(IERC1155).interfaceId));
+        assertTrue(clawback.supportsInterface(type(IClawback).interfaceId));
         assertTrue(clawback.supportsInterface(type(IClawbackFunctions).interfaceId));
-        assertTrue(clawback.supportsInterface(type(ISignalsImplicitMode).interfaceId));
+        assertTrue(clawback.supportsInterface(type(IERC1155).interfaceId));
+        assertTrue(clawback.supportsInterface(type(IERC1155Metadata).interfaceId));
+        assertTrue(clawback.supportsInterface(type(IERC165).interfaceId));
     }
-
 }
