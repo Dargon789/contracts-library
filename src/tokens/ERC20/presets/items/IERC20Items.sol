@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 interface IERC20ItemsFunctions {
-
     /**
      * Mint tokens.
      * @param to Address to mint tokens to.
@@ -16,16 +15,13 @@ interface IERC20ItemsFunctions {
      * @param tokenSymbol Symbol of token.
      */
     function setNameAndSymbol(string memory tokenName, string memory tokenSymbol) external;
-
 }
 
 interface IERC20ItemsSignals {
-
     /**
      * Invalid initialization error.
      */
     error InvalidInitialization();
-
 }
 
-interface IERC20Items is IERC20ItemsFunctions, IERC20ItemsSignals { }
+interface IERC20Items is IERC20ItemsFunctions, IERC20ItemsSignals {}
