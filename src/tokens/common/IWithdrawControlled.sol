@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 interface IWithdrawControlledFunctions {
-
     /**
      * Withdraws ERC20 tokens owned by this contract.
      * @param token The ERC20 token address.
@@ -17,16 +16,13 @@ interface IWithdrawControlledFunctions {
      * @param value Amount to withdraw.
      */
     function withdrawETH(address to, uint256 value) external;
-
 }
 
 interface IWithdrawControlledSignals {
-
     /**
      * Withdraw failed error.
      */
     error WithdrawFailed();
-
 }
 
-interface IWithdrawControlled is IWithdrawControlledFunctions, IWithdrawControlledSignals { }
+interface IWithdrawControlled is IWithdrawControlledFunctions, IWithdrawControlledSignals {}
