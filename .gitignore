@@ -7,9 +7,12 @@ report/
 # Ignore .DS_Store files on macOS
 .DS_Store
 
-# PNPM
+# Yarn
 node_modules/
-pnpm-error.log
+yarn-error.log
 
 # Env vars
 .env
+.env.example
+*.toml
+*.lock
