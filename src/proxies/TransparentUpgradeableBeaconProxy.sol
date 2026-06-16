@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { BeaconProxy, Proxy } from "./openzeppelin/BeaconProxy.sol";
-import { ERC1967Proxy, TransparentUpgradeableProxy } from "./openzeppelin/TransparentUpgradeableProxy.sol";
+import {BeaconProxy, Proxy} from "./openzeppelin/BeaconProxy.sol";
+import {TransparentUpgradeableProxy, ERC1967Proxy} from "./openzeppelin/TransparentUpgradeableProxy.sol";
 
 interface ITransparentUpgradeableBeaconProxy {
-
     function initialize(address admin, address beacon, bytes memory data) external;
-
 }
 
 error InvalidInitialization();
@@ -25,7 +23,6 @@ error InvalidInitialization();
  * - 0x5c60da1b: implementation (from TransparentUpgradeableProxy)
  */
 contract TransparentUpgradeableBeaconProxy is TransparentUpgradeableProxy, BeaconProxy {
-
     /**
      * Decode the initialization data from the msg.data and call the initialize function.
      */
@@ -79,5 +76,4 @@ contract TransparentUpgradeableBeaconProxy is TransparentUpgradeableProxy, Beaco
         }
         return BeaconProxy._implementation();
     }
-
 }

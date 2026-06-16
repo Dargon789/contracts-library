@@ -1,19 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-import { ClawbackMetadata, ClawbackTestBase, IClawbackFunctions } from "./ClawbackTestBase.sol";
+import {ClawbackTestBase, IClawbackFunctions, ClawbackMetadata} from "./ClawbackTestBase.sol";
+import {console, stdError} from "forge-std/Test.sol";
 
-import { IMetadataProvider } from "src/tokens/common/IMetadataProvider.sol";
-import { Duration } from "src/utils/Duration.sol";
+import {IMetadataProvider} from "src/tokens/common/IMetadataProvider.sol";
+import {Duration} from "src/utils/Duration.sol";
 
-import { IERC165 } from "openzeppelin-contracts/contracts/utils/introspection/IERC165.sol";
+import {IERC165} from "@0xsequence/erc-1155/contracts/interfaces/IERC165.sol";
 
-import { console, stdError } from "forge-std/Test.sol";
-
-import { LibString } from "solady/utils/LibString.sol";
+import {LibString} from "solady/utils/LibString.sol";
 
 contract ClawbackMetadataTest is ClawbackTestBase {
-
     using LibString for *;
 
     struct DetailsParam {
@@ -23,9 +21,11 @@ contract ClawbackMetadataTest is ClawbackTestBase {
         uint256 tokenId;
     }
 
-    function _paramToDetails(
-        DetailsParam memory param
-    ) internal view returns (IClawbackFunctions.TokenDetails memory) {
+    function _paramToDetails(DetailsParam memory param)
+        internal
+        view
+        returns (IClawbackFunctions.TokenDetails memory)
+    {
         IClawbackFunctions.TokenType tokenType = _toTokenType(param.tokenType);
         address tokenAddr;
         if (tokenType == IClawbackFunctions.TokenType.ERC20) {
@@ -44,10 +44,9 @@ contract ClawbackMetadataTest is ClawbackTestBase {
         });
     }
 
-    function testMetadataPropertiesERC20(
-        DetailsParam memory detailsParam,
-        IClawbackFunctions.Template memory template
-    ) public {
+    function testMetadataPropertiesERC20(DetailsParam memory detailsParam, IClawbackFunctions.Template memory template)
+        public
+    {
         IClawbackFunctions.TokenDetails memory details = _paramToDetails(detailsParam);
         details.tokenType = IClawbackFunctions.TokenType.ERC20;
         details.tokenAddr = address(erc20);
@@ -62,10 +61,9 @@ contract ClawbackMetadataTest is ClawbackTestBase {
         _hasProperty(properties, "original_decimals", erc20.decimals().toString());
     }
 
-    function testMetadataPropertiesERC721(
-        DetailsParam memory detailsParam,
-        IClawbackFunctions.Template memory template
-    ) public {
+    function testMetadataPropertiesERC721(DetailsParam memory detailsParam, IClawbackFunctions.Template memory template)
+        public
+    {
         IClawbackFunctions.TokenDetails memory details = _paramToDetails(detailsParam);
         details.tokenType = IClawbackFunctions.TokenType.ERC721;
         details.tokenAddr = address(erc721);
@@ -203,11 +201,9 @@ contract ClawbackMetadataTest is ClawbackTestBase {
         return Duration.format(remaining);
     }
 
-    function _hasProperty(
-        ClawbackMetadata.MetadataProperty[] memory properties,
-        string memory key,
-        string memory value
-    ) internal {
+    function _hasProperty(ClawbackMetadata.MetadataProperty[] memory properties, string memory key, string memory value)
+        internal
+    {
         bytes32 hashedKey = keccak256(abi.encodePacked(key));
         for (uint256 i = 0; i < properties.length; i++) {
             if (keccak256(abi.encodePacked(properties[i].key)) == hashedKey) {
@@ -226,5 +222,4 @@ contract ClawbackMetadataTest is ClawbackTestBase {
         assertTrue(clawbackMetadata.supportsInterface(type(IMetadataProvider).interfaceId));
         assertTrue(clawbackMetadata.supportsInterface(type(IERC165).interfaceId));
     }
-
 }
