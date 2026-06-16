@@ -3,13 +3,13 @@ import { join } from 'path'
 import { BUILD_DIR, DEPLOYABLE_CONTRACT_NAMES } from './constants'
 import { config as dotenvConfig } from 'dotenv'
 import {
-  ContractFactory,
-  ContractTransaction,
-  Signer,
-  Wallet,
   ethers,
+  JsonRpcProvider,
+  Wallet,
+  Signer,
+  ContractFactory,
+  TransactionResponse
 } from 'ethers'
-import { JsonRpcProvider } from '@ethersproject/providers'
 
 dotenvConfig()
 
