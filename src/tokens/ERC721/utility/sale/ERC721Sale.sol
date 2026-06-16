@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.19;
 
-<<<<<<< Updated upstream
-import { MerkleProofSingleUse } from "../../../common/MerkleProofSingleUse.sol";
-import { SignalsImplicitModeControlled } from "../../../common/SignalsImplicitModeControlled.sol";
-import { IERC20, SafeERC20, WithdrawControlled } from "../../../common/WithdrawControlled.sol";
-import { IERC721ItemsFunctions } from "../../presets/items/IERC721Items.sol";
-import { IERC721Sale, IERC721SaleFunctions } from "./IERC721Sale.sol";
-=======
 import {
     IERC721Sale, IERC721SaleFunctions
 } from "@0xsequence/contracts-library/tokens/ERC721/utility/sale/IERC721Sale.sol";
@@ -18,10 +11,8 @@ import {
     IERC20
 } from "@0xsequence/contracts-library/tokens/common/WithdrawControlled.sol";
 import {MerkleProofSingleUse} from "@0xsequence/contracts-library/tokens/common/MerkleProofSingleUse.sol";
-
 import {IERC721A} from "erc721a/contracts/extensions/ERC721AQueryable.sol";
 import {IERC721ItemsFunctions} from "@0xsequence/contracts-library/tokens/ERC721/presets/items/IERC721Items.sol";
->>>>>>> Stashed changes
 
 /**
  * An ERC-721 token contract with primary sale mechanisms.
@@ -122,22 +113,6 @@ contract ERC721Sale is IERC721Sale, WithdrawControlled, MerkleProofSingleUse {
      * @dev An empty proof is supplied when no proof is required.
      * @dev `paymentToken` must match the `paymentToken` in the sale details.
      */
-<<<<<<< Updated upstream
-    function mint(
-        address to,
-        uint256 amount,
-        address paymentToken,
-        uint256 maxTotal,
-        bytes32[] calldata proof
-    ) public payable {
-        _validateMint(amount, paymentToken, maxTotal, proof);
-        try IERC721ItemsFunctions(_items).mintSequential(to, amount) { }
-        catch {
-            // On failure, support old minting method.
-            IERC721ItemsFunctions(_items).mint(to, amount);
-        }
-        emit ItemsMinted(to, amount);
-=======
     function mint(address to, uint256 amount, address paymentToken, uint256 maxTotal, bytes32[] calldata proof)
         public
         payable
@@ -149,7 +124,6 @@ contract ERC721Sale is IERC721Sale, WithdrawControlled, MerkleProofSingleUse {
         }
         _payForActiveMint(amount, paymentToken, maxTotal, proof);
         IERC721ItemsFunctions(_items).mint(to, amount);
->>>>>>> Stashed changes
     }
 
     /**
