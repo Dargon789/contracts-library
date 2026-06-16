@@ -11,7 +11,7 @@ interface IERC721SaleFactoryFunctions {
      * @return proxyAddr The address of the ERC-721 Sale Proxy
      * @notice The deployed contract must be granted the MINTER_ROLE on the ERC-721 Items contract.
      */
-<<<<<<< Updated upstream
+
     function deploy(
         uint256 nonce,
         address proxyOwner,
@@ -20,9 +20,7 @@ interface IERC721SaleFactoryFunctions {
         address implicitModeValidator,
         bytes32 implicitModeProjectId
     ) external returns (address proxyAddr);
-=======
-    function deploy(address proxyOwner, address tokenOwner, address items) external returns (address proxyAddr);
->>>>>>> Stashed changes
+
 
     /**
      * Computes the address of a proxy instance.
@@ -32,7 +30,7 @@ interface IERC721SaleFactoryFunctions {
      * @param items The ERC-721 Items contract address
      * @return proxyAddr The address of the ERC-721 Sale Proxy
      */
-<<<<<<< Updated upstream
+
     function determineAddress(
         uint256 nonce,
         address proxyOwner,
@@ -41,12 +39,6 @@ interface IERC721SaleFactoryFunctions {
         address implicitModeValidator,
         bytes32 implicitModeProjectId
     ) external returns (address proxyAddr);
-
-=======
-    function determineAddress(address proxyOwner, address tokenOwner, address items)
-        external
-        returns (address proxyAddr);
->>>>>>> Stashed changes
 }
 
 interface IERC721SaleFactorySignals {
