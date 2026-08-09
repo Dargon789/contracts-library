@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    lint-and-format:
+      glob: '**/*.sol'
+      run: pnpm run format:sol {staged_files} && pnpm run lint:sol {staged_files} && git add {staged_files}
