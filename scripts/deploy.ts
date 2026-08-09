@@ -9,7 +9,7 @@ import {
   Wallet,
   ethers,
 } from 'ethers'
-import { JsonRpcProvider } from 'ethers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 
 dotenvConfig()
 
