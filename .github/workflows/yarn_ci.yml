@@ -1,6 +1,7 @@
 on: [push]
 
 name: ci
+
 permissions:
   contents: read
 
@@ -22,7 +23,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-lerna-${{ hashFiles('**/package.json', '**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile --network-concurrency 1
+      - run: yarn install --network-concurrency 1
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
 
   lint-sol:
@@ -77,7 +78,7 @@ jobs:
           version: nightly
 
       - name: Run tests
-        run: FOUNDRY_FUZZ_RUNS=1024 forge test -vvv 
+        run: FOUNDRY_FUZZ_RUNS=1024 forge test -vvv
 
   # coverage:
   #   name: Coverage
